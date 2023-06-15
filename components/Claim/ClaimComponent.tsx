@@ -9,9 +9,13 @@ import {
   JsonRpcFetchFunc,
   Web3Provider,
 } from "@ethersproject/providers";
-import { formatEther, parseEther} from "@ethersproject/units";
+import { formatEther, parseEther } from "@ethersproject/units";
 import { Contract } from "@ethersproject/contracts";
 import { abiObject } from "../../contracts/abi/abi.mjs";
+import Image from "next/image.js";
+import ClaimedGraphic from "../../assets/images/ClaimedGraphic.png";
+import UnclaimedGraphic from "../../assets/images/UnclaimedGraphic.png";
+import BalanceGraphic from "../../assets/images/BalanceGraphic.png";
 import { Web3ReactProvider } from "@web3-react/core";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -55,9 +59,10 @@ export default function ClaimComponent() {
         const provider = new Web3Provider(
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
-        const contractaddress = "0x9C3F96975324c51ecfE3722191655d1028575282"; // "clienttokenaddress"
+        const contractaddress = "0x3aCb247406680c28Dd5816Ec36423bE53ce318D6"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
         const balance = await new contract.balanceOf(account); //.claim(account,amount)
+        console.log(balance)
         const Claimtxid = await balance;
         const finalbalance = Number(balance);
         const Fixeddecimals = finalbalance.toFixed(2);
@@ -159,7 +164,7 @@ export default function ClaimComponent() {
         const provider = new Web3Provider(
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
-        const contractaddress = "0x5F5ba036Bd464782894499Fb21aa137d3eA9d757"; // "clienttokenaddress"
+        const contractaddress = "0x33F1ef9e8129F91C0763C35daF6De475057B2bC8"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
         const rewardToken = "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6";
         const Reflections = await contract.withdrawableDividendOf(account); //.claim()
@@ -175,7 +180,7 @@ export default function ClaimComponent() {
         setLoading(false);
       }
     }
-    
+
     async function totalBurned() {
       try {
         setLoading(true);
@@ -183,7 +188,7 @@ export default function ClaimComponent() {
         const provider = new Web3Provider(
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
-        const contractaddress = "0x5F5ba036Bd464782894499Fb21aa137d3eA9d757"; // "clienttokenaddress"
+        const contractaddress = "0x33F1ef9e8129F91C0763C35daF6De475057B2bC8"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
         const burnAmount = await contract.TotalBurned();
         const finalNumber = formatEther(burnAmount);
@@ -210,7 +215,7 @@ export default function ClaimComponent() {
         const contract = new Contract(contractaddress, abi, provider);
         const rewardToken = "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6";
         const Reflections = await contract.getTotalDividendsDistributed();
-        const formattedDistributed = (formatEther(Reflections));
+        const formattedDistributed = formatEther(Reflections);
         settotaldistributed(formattedDistributed);
         console.log(formattedDistributed);
 
@@ -409,56 +414,47 @@ export default function ClaimComponent() {
 
   return (
     <>
-      <div className="flex flex-col w-full content-center items-center px-6 sm:px-10 md:px-20 lg:px-48 xl:px-64 js-show-on-scroll-fadeOut">
-        <div className="md:grid grid-cols-2 flex flex-col border-2 border-black rounded-xl">
-          <div
-            className={
-              "rounded-xl text-black text-xl px-4 py-2 m-3"
-            }
-          >
-            <p className={"text-xl font-bold text-gray-300"}>
-              Pending ETH Rewards:
-            </p>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+        className={
+          "mx-auto self-center content-center items-center justify-center"
+        }
+      >
+        <div className={"flex flex-row w-screen object-center justify-center px-4"}>
+          <div style={{ backgroundColor: "#212121"}} className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-5 py-3 text-center mr-2 mb-2">
+            <div className={"flex flex-row"}>
+              <p>Balance</p>
+              <Image src={BalanceGraphic}></Image>
+            </div>
+            <p className={"text-left"}>{}</p>
           </div>
-          <div
-            className={
-              "rounded-xl text-black text-xl px-4 py-2 m-3"
-            }
-          >
-            <p className={"text-xl text-gray-300 "}>{pendingreflections} ETH</p>
+          <div style={{ backgroundColor: "#212121"}} className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-5 py-3 text-center mr-2 mb-2">
+            <div className={"flex flex-row"}>
+              <p>Claimed</p>
+              <Image src={ClaimedGraphic}></Image>
+            </div>
+            <p className={"text-left"}>{pendingreflections}</p>
           </div>
-          <div
-            className={
-              "rounded-xl text-black  text-xl px-4 py-2 m-3"
-            }
-          >
-            <p className={"text-xl font-bold text-gray-300"}>
-              Total ETH Distributed
-            </p>
-          </div>
-          <div className={"rounded-xl text-black text-xl px-4 py-2 m-3"}>
-            <p className={"text-xl text-gray-300"}>{totaldistributed} ETH</p>
-          </div>
-          <div
-            className={
-              "rounded-xl text-black  text-xl px-4 py-2 m-3"
-            }
-          >
-            <p className={"text-xl font-bold text-gray-300"}>
-              Total burned
-            </p>
-          </div>
-          <div className={"rounded-xl text-black text-xl px-4 py-2 m-3"}>
-            <p className={"text-xl text-gray-300"}>{totalburned} KOMAX</p>
+          <div style={{ backgroundColor: "#212121"}} className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-5 py-3 text-center mr-2 mb-2">
+            <div className={"flex flex-row"}>
+              <p>Unclaimed</p>
+              <Image src={UnclaimedGraphic}></Image>
+            </div>
+            <p className={"text-left"}>{pendingreflections}</p>
           </div>
         </div>
-        
+      </div>
+
+      <div className="flex flex-col w-full content-center items-center px-6 sm:px-10 md:px-20 lg:px-48 xl:px-64 js-show-on-scroll-fadeOut">
 
         <h5
-          style={{ fontFamily: "Karasha" }}
           className="text-center mb-2 text-4xl self-center text-gray-600"
         >
-          Claim ETH Rewards
+          Claim Airdrop Rewards
         </h5>
         {loading ? (
           <Spin indicator={antIcon} className="add-spinner" />
@@ -466,11 +462,10 @@ export default function ClaimComponent() {
           <>
             <div className="flex flex-row content-center items-center max-w-screen">
               <button
-                style={{ fontFamily: "Karasha" }}
                 type="button"
                 onClick={() => Claimtoken()}
                 className="w-fit mx-0 px-20 md:px-32 self-center content-center tn:mx-0 elevation-10 hover:elevation-50 md:mx-24 h-24
-                 clip-path-mycorners justify-self-center mt-10 text-gray-300 hover:text-gray-100 bg-red-600 hover:bg-red-800 transition ease-in-out duration-700
+                 clip-path-mycorners justify-self-center mt-10 text-gray-300 hover:text-gray-100 bg-pink-600 hover:bg-pink-800 transition ease-in-out duration-700
                  text-3xl lg:text-4xl "
               >
                 Claim
@@ -482,6 +477,32 @@ export default function ClaimComponent() {
     </>
   );
 }
+
+//<div className="md:grid grid-cols-2 flex flex-col border-2 border-black rounded-xl">
+//<div className={"rounded-xl text-black text-xl px-4 py-2 m-3"}>
+//  <p className={"text-xl font-bold text-gray-300"}>
+//    Pending ETH Rewards:
+//  </p>
+//</div>
+//<div className={"rounded-xl text-black text-xl px-4 py-2 m-3"}>
+//  <p className={"text-xl text-gray-300 "}>{pendingreflections} ETH</p>
+//</div>
+//<div className={"rounded-xl text-black  text-xl px-4 py-2 m-3"}>
+//  <p className={"text-xl font-bold text-gray-300"}>
+//    Total ETH Distributed
+//  </p>
+//</div>
+//<div className={"rounded-xl text-black text-xl px-4 py-2 m-3"}>
+//  <p className={"text-xl text-gray-300"}>{totaldistributed} ETH</p>
+//</div>
+//<div className={"rounded-xl text-black  text-xl px-4 py-2 m-3"}>
+//  <p className={"text-xl font-bold text-gray-300"}>Total burned</p>
+//</div>
+//<div className={"rounded-xl text-black text-xl px-4 py-2 m-3"}>
+//  <p className={"text-xl text-gray-300"}>{totalburned} $BRRR</p>
+//</div>
+//</div>
+
 
 //
 //<div className={"rounded-xl text-black text-xl px-4 py-2 m-3"}>
