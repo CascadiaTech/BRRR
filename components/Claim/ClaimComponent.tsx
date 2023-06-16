@@ -16,6 +16,7 @@ import Image from "next/image.js";
 import ClaimedGraphic from "../../assets/images/ClaimedGraphic.png";
 import UnclaimedGraphic from "../../assets/images/UnclaimedGraphic.png";
 import BalanceGraphic from "../../assets/images/BalanceGraphic.png";
+import BRRHead from "../../assets/images/BRRRHead.png";
 import { Web3ReactProvider } from "@web3-react/core";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -35,6 +36,7 @@ export default function ClaimComponent() {
   const [totalburned, settotalburned] = useState(String);
   const [totaldistributed, settotaldistributed] = useState(String);
   const [balance, setbalance] = useState(Number);
+  const [burn, setcanburn] = useState(Boolean);
   const [EthPrice, setEthPrice] = useState(Number);
   const [holdersCount, setholdersCount] = useState(Number);
   const [marketCap, setmarketCap] = useState(Number);
@@ -412,6 +414,44 @@ export default function ClaimComponent() {
     setProvider().then((result) => setuniswapprivder(result as any));
   }, [account]);
 
+  
+  const Burntoken = useCallback(async () => {
+    if (!account) {
+      Swal.fire({
+        icon: "error",
+        title: "Connect Your Wallet To Burn",
+        timer: 5000,
+      });
+    }
+
+    try {
+      setLoading(true);
+      const data = abiObject;
+      const abi = data;
+      const contractaddress = "0x5F5ba036Bd464782894499Fb21aa137d3eA9d757"; // "clienttokenaddress"
+      const provider = new Web3Provider(
+        library?.provider as ExternalProvider | JsonRpcFetchFunc
+      );
+      //const provider = getDefaultProvider()
+      const signer = provider.getSigner();
+      const contract = new Contract(contractaddress, abi, signer);
+      console.log(contract);
+      const BurnTokens = await contract.burn(); //.burn()
+      const signtransaction = await signer.signTransaction(BurnTokens);
+      const FinalBurn = await signtransaction;
+      Swal.fire({
+        icon: "success",
+        title: "Congratulations you have Burned all of your tokens",
+        text: "We shall see you next time when you wish to burn more!",
+      });
+      return FinalBurn;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }, [account, library?.provider, burn]);
+
   return (
     <>
       <div
@@ -421,10 +461,10 @@ export default function ClaimComponent() {
           justifyContent: "center",
         }}
         className={
-          "mx-auto self-center content-center items-center justify-center"
+          "mx-auto justify-center mt-16 w-fit"
         }
       >
-        <div className={"flex flex-row w-screen object-center justify-center px-4"}>
+        <div className={"flex flex-row w-fit mx-auto"}>
           <div style={{ backgroundColor: "#212121"}} className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-5 py-3 text-center mr-2 mb-2">
             <div className={"flex flex-row"}>
               <p>Balance</p>
@@ -473,6 +513,42 @@ export default function ClaimComponent() {
             </div>
           </>
         )}
+        <hr className="my-4 mx-auto w-48 h-1 bg-pink-500 rounded border-0 md:my-10" />
+        <div
+            style={{ backgroundColor: "#171717" }}
+            className={
+              "w-fit self-center text-center flex flex-col justify-center my-10 text-center h-fit mx-auto px-10 rounded-xl py-4"
+            }
+          >
+            <p className={"text-center text-pink-500 text-xl font-bold my-10"}>
+              $BRR COMMUNITY INCINERATOR
+            </p>
+            <input
+              className={"border border-gray-200 my-2 px-4 py-2"}
+              placeholder="Amount to burn"
+            ></input>
+            <button
+              onClick={() => Burntoken()}
+              className={
+                "bg-pink-400 hover:bg-pink-600 focus:ring focus:ring-2 focus:ring-white text-xl justify-center px-12 my-6 text-white py-4 font-bold rounded-md"
+              }
+            >
+              Burn
+            </button>
+          </div>
+
+        <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+        className={
+          "mx-auto self-center content-center items-center justify-center"
+        }
+      >
+        <Image className={'justify-center mx-auto'} src={BRRHead}></Image>
+        </div>
       </div>
     </>
   );

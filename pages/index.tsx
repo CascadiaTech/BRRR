@@ -4,13 +4,8 @@ import styles from "../styles/Home.module.css";
 import HeaderComponent from "../components/Header/HeaderComponent";
 import "tailwindcss-elevation";
 import FooterComponent from "../components/Footer/FooterComponent";
-import DualCardComponent from "../components/DualCards/DualCardComponent";
-import ScrollpositionAnimation from "../hooks/OnScroll";
 import { useCallback, useEffect, useRef, useState } from "react";
 import "@uniswap/widgets/fonts.css";
-import goonsHomepage from "../assets/images/GoonsHomepage.jpg";
-import goonsLogoMobile from "../assets/images/goonsLogoMobile.jpg";
-import KomaInuLogo from "../assets/images/KomaInuLogo.png";
 import { useWeb3React } from "@web3-react/core";
 import {
   ExternalProvider,
@@ -75,7 +70,7 @@ const Home: NextPage = () => {
     if (!account) {
       Swal.fire({
         icon: "error",
-        title: "Connect Your Wallet To Claim",
+        title: "Connect Your Wallet To Burn",
         timer: 5000,
       });
     }
@@ -130,9 +125,17 @@ const Home: NextPage = () => {
   };
 
   const theme: Theme = {
-    borderRadius: 0,
-    fontFamily: '"Mandalore"',
-  };
+    primary: '#ffffff', //blue
+    secondary: '#ffffff', //red
+    interactive: '#c44ebc', //yellow
+    container: '#c400b6', //green
+    module: '#61005a', //purple
+    accent: '#c44ebc', //orange
+    outline: '#fff',
+    dialog: '#fff',
+    borderRadius: 0.5,
+  }
+
   const MY_TOKEN_LIST = [
     {
       name: "Cosmic Odyssey",
@@ -172,11 +175,11 @@ const Home: NextPage = () => {
           {" "}
           <HeaderComponent></HeaderComponent>
         </header>
-        <div className="sm:w-1/2 py-6 mx-auto justify-center flex flex-col lg:w-fit lg:flex-row mt-20 py-5 rounded-2xl">
-          <div className={"flex flex-col mx-0 lg:mx-10"}>
+        <div className="sm:w-fit self-center py-6 mx-auto justify-center flex flex-col lg:w-fit lg:flex-row mt-20 rounded-2xl">
+          <div className={"flex flex-col mx-0 lg:mx-20"}>
             <div
               className={
-                "flex flex-col mx-auto justify-center lg:flex-row px-10 py-4 rounded-2xl h-fit w-fit"
+                "flex flex-col mx-auto self-center justify-center lg:flex-row px-20 lg:px-4 py-4 rounded-2xl h-fit w-fit"
               }
               style={{ backgroundColor: "#171717" }}
             >
@@ -186,38 +189,38 @@ const Home: NextPage = () => {
               <div className={"flex flex-col mx-5"}>
                 <Image width={100} height={150} src={Graphic}></Image>
                 <p className={"text-center"}>TBA</p>
-                <button
+                <div
                   style={{ backgroundColor: "#040024" }}
                   className={"rounded-xl px-10 py-3"}
                 >
                   Buyback
-                </button>
+                </div>
               </div>
               <div className={"flex flex-col mx-5"}>
                 <Image width={100} height={150} src={BurnedGraphic}></Image>
                 <p className={"text-center"}>TBA</p>
-                <button
+                <div
                   style={{ backgroundColor: "#040024" }}
                   className={"rounded-xl px-10 py-3"}
                 >
                   Burrrrned
-                </button>
+                </div>
               </div>
               <div className={"flex flex-col mx-5"}>
                 <Image width={100} height={150} src={DropGraphic}></Image>
                 <p className={"text-center"}>TBA</p>
-                <button
+                <div
                   style={{ backgroundColor: "#040024" }}
                   className={" rounded-xl px-10 py-3"}
                 >
                   Brrrrdrop
-                </button>
+                </div>
               </div>
             </div>
 
             <div
               className={
-                "flex flex-col mx-auto my-10 justify-center lg:flex-row px-6 py-4 rounded-2xl h-fit w-fit"
+                "flex flex-col mx-auto my-10 self-center justify-center lg:flex-row px-16 lg:px-5 py-4 rounded-2xl h-fit w-fit"
               }
               style={{ backgroundColor: "#171717" }}
             >
@@ -228,7 +231,7 @@ const Home: NextPage = () => {
               </div>
               <div
                 style={{ backgroundColor: "#212121" }}
-                className={"rounded-2xl my-2 mx-5 h-fit py-4 px-4"}
+                className={"rounded-2xl my-2 mx-2 h-fit py-4 px-2"}
               >
                 <div className={"flex flex-row"}>
                   <Image width={35} height={35} src={CalcGraphic}></Image>
@@ -238,7 +241,7 @@ const Home: NextPage = () => {
               </div>
               <div
                 style={{ backgroundColor: "#212121" }}
-                className={"rounded-2xl my-2 mx-5 h-fit py-4 px-4"}
+                className={"rounded-2xl my-2 mx-2 h-fit py-4 px-2"}
               >
                 <div className={"flex flex-row"}>
                   <Image width={35} height={35} src={MCapGraphic}></Image>
@@ -248,7 +251,7 @@ const Home: NextPage = () => {
               </div>
               <div
                 style={{ backgroundColor: "#212121" }}
-                className={"rounded-2xl my-2 mx-5 h-fit py-4 px-4"}
+                className={"rounded-2xl my-2 mx-2 h-fit py-4 px-2"}
               >
                 <div className={"flex flex-row"}>
                   <Image width={35} height={35} src={LiqGraphic}></Image>
@@ -262,73 +265,24 @@ const Home: NextPage = () => {
           <div className={"flex flex-col mx-auto justify-center"}>
             <SwapWidget
               tokenList={MY_TOKEN_LIST}
-              theme={theme && darkTheme}
+              theme={theme}
               provider={uniswaprovider}
             />
             {account ? (
               <>
-                <button
+                <div
                   onClick={addTokenToMM}
                   className="bg-purple-600 my-1 rounded-xl h-fit hover:bg-purple-500 text-white font-bold py-2 px-4 border-b-4 border-purple-500 hover:border-purple-700"
                 >
                   Add $BRRR to Metammask
-                </button>
+                </div>
               </>
             ) : (
               <></>
             )}
           </div>
         </div>
-
-        <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-        className={
-          "mx-auto self-center content-center items-center justify-center"
-        }
-      >
-        <div className={"flex flex-row w-screen object-center justify-center"}>
-        <Image
-            width={350}
-            height={550}
-            className={"hidden md:visible lg:visible self-center"}
-            src={BRRMEME}
-          ></Image>
-          <div
-            style={{ backgroundColor: "#171717" }}
-            className={
-              "w-fit self-center text-center flex flex-col justify-center text-center h-fit mx-40 px-10 rounded-xl py-4"
-            }
-          >
-            <p className={"text-center text-pink-500 text-xl font-bold my-10"}>
-              $BRR COMMUNITY INCINERATOR
-            </p>
-            <input
-              className={"border border-gray-200 my-2 px-4 py-2"}
-              placeholder="Amount to burn"
-            ></input>
-            <button
-              onClick={() => Burntoken()}
-              className={
-                "bg-pink-400 hover:bg-pink-600 focus:ring focus:ring-2 focus:ring-white text-xl justify-center px-12 my-6 text-white py-4 font-bold rounded-md"
-              }
-            >
-              Burn
-            </button>
-          </div>
-          </div>
-          </div>
-
-
         <p className={"my-5"}></p>
-        <hr className="my-4 mx-auto w-48 h-1 bg-pink-500 rounded border-0 md:my-10" />
-
-        <div className={"justify-center flex flex-col"}>
-          <ClaimComponent></ClaimComponent>
-        </div>
       </main>
       <FooterComponent></FooterComponent>
     </div>
@@ -351,35 +305,35 @@ export default Home;
 //<div
 //  className={"flex flex-row w-screen object-center justify-center"}
 //>
-//  <button
+//  <div
 //    onClick={() => window.open("https://komatoken.io/")}
-//    type="button"
+//    type="div"
 //    className="text-pink-500 font-bold hover:text-white border transition-all duration-600 border-pink-600 hover:bg-pink-600 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-lg text-2xl md:text-3xl px-5 py-3 text-center mr-2 mb-2"
 //  >
 //    Website
-//  </button>
-//  <button
+//  </div>
+//  <div
 //    onClick={() =>
 //      window.open(
 //        "https://app.uniswap.org/#/swap?inputCurrency=0x5F5ba036Bd464782894499Fb21aa137d3eA9d757&outputCurrency=ETH"
 //      )
 //    }
-//    type="button"
+//    type="div"
 //    className="text-pink-500 font-bold hover:text-white border transition-all duration-600 border-pink-600 hover:bg-pink-600 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-lg text-2xl md:text-3xl px-5 py-3 text-center mr-2 mb-2"
 //  >
 //    {" "}
 //    Buy
-//  </button>
-//  <button
+//  </div>
+//  <div
 //    onClick={() =>
 //      window.open(
 //        "https://etherscan.io/address/0x5f5ba036bd464782894499fb21aa137d3ea9d757"
 //      )
 //    }
-//    type="button"
+//    type="div"
 //    className="text-pink-500 font-bold hover:text-white border transition-all duration-600 border-pink-600 hover:bg-pink-600 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-lg text-2xl md:text-3xl px-5 py-3 text-center mr-2 mb-2"
 //  >
 //    Token
-//  </button>
+//  </div>
 //</div>
 //</div>

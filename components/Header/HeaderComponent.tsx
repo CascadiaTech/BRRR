@@ -1,78 +1,119 @@
 import "tailwindcss-elevation";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 //import Image from "next/image";
 import Link from "next/link";
 import Image from "next/image";
 import BRRRLogo from "../../assets/images/BRRRLogo.png";
 import { ConnectWallet } from "../Web3Modal/WalletConnect";
 import { Dropdown } from "flowbite-react";
+import { useRouter } from "next/router";
 export default function HeaderComponent() {
-  //    backgroundImage: `url(${backgroundimage})`,
+  const headerRef = useRef<any>(null);
+  const [hidden, setHidden] = useState({ hidden: 0, rotate: 0 });
+  const [homepagestyle, setHomepageStyle] = useState(false);
+  function Onclick() {
+    if (hidden.hidden == 0 && hidden.rotate == 0) {
+      setHidden({ hidden: 100, rotate: 90 });
+    } else {
+      setHidden({ hidden: 0, rotate: 0 });
+    }
+  }
+  function OnOffClick() {
+    if (router.pathname != "/" && !headerRef?.current.contains(event?.target)) {
+      // Clicked outside the header, so close it
+      setHidden({ hidden: 0, rotate: 0 });
+    }
+  }
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.pathname == "/Main/EntryPage") {
+      setHomepageStyle(true);
+    } else {
+      setHomepageStyle(false);
+    }
+  }, [router.pathname]);
 
   return (
     <div>
-      <nav style={{backgroundColor: '#141414'}} className="px-2 sm:px-4 py-2.5 fixed w-fit sm:w-full z-20 top-0 left-0 border-b border-pink-500">
+      <nav
+        style={{ backgroundColor: "#141414" }}
+        className="px-2 sm:px-4 py-10 sm:py-2 flex fixed w-fit sm:w-full z-20 top-0 left-0 border-b border-pink-500"
+      >
         <div className="container flex flex-nowrap justify-left items-center mx-auto">
-          <div className="md:order-4 justify-right self-right content-right object-right">
+          <div className="mt-4 mr-24 sm:mr-0 absolute top-0 right-0">
             <ConnectWallet></ConnectWallet>
           </div>
-          <div className="sm:visible md:hidden">
-            <Dropdown label="Navigation">
-              <Dropdown.Header>
-                <span
-                  className="block text-md cursor-pointer block py-2 pr-4 pl-3 text-black rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
-                  style={{ fontFamily: "Karasha" }}
-                >
-                  Navigation
-                </span>
-              </Dropdown.Header>
-              <Dropdown.Item>
-                <Link href="/">
-                  <p
-                    className="cursor-pointer block py-2 pr-4 pl-3 text-black rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
-                    style={{ fontFamily: "Karasha" }}
-                  >
-                    Dashboard{" "}
-                  </p>
-                </Link>
-              </Dropdown.Item>
-              <Dropdown.Item>
-                <a onClick={() => window.open("https://komatoken.io/")}>
-                  <p
-                    className="cursor-pointer block py-2 pr-4 pl-3 text-black rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
-                    style={{ fontFamily: "Karasha" }}
-                  >
-                    Website
-                  </p>
-                </a>
-              </Dropdown.Item>
-              <Dropdown.Divider />
-            </Dropdown>
-          </div>
           <div
-            className="h-0 justify-left self-center items-left text-left w-full md:flex md:h-fit md:w-auto order-1"
+            className="justify-left self-center items-left text-left w-full flex h-fit w-auto order-1 md:flex md:h-fit md:w-auto order-1"
             id="navbar-sticky"
           >
-            <ul className="invisible md:visible h-auto flex flex-row justify-left self-center text-left items-left p-4 mt-4 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-md md:md:border-0 dark:border-gray-700">
+            <ul className="h-auto flex flex-row justify-left self-center -my-16 sm:my-0 text-left items-left p-4 mt-4 rounded-lg md:space-x-8 md:mt-0 md:text-md ">
+              <div className={'invisible sm:visible flex flex-row'}>
               <li>
-                <Image
-                  width={50}
-                  height={50}
-                  src={BRRRLogo}
-                  alt="asa"
-                ></Image>
+                <Image width={50} height={50} src={BRRRLogo} alt="asa"></Image>
               </li>
-              <li className={'text-right justify-right content-right'}>
+              <li className={"text-right justify-right px-3 content-right"}>
                 {" "}
-                <a onClick={() => window.open("https://komatoken.io/")}>
-                    <p
-                      className="text-xl font-bold cursor-pointer block self-center mt-3 py-2 pr-4 pl-3 text-pink-400 md:bg-transparent md:p-0"
-                    >
-                      Printshop{" "}
-                    </p>
+                <a onClick={() => window.open("")}>
+                  <p className="text-xl font-bold cursor-pointer block self-center mt-2 pr-40 mr-40 pl-3 text-pink-400 md:bg-transparent md:p-0">
+                    Printshop{" "}
+                  </p>
                 </a>
               </li>
+              </div>
+              
+              <ul
+                className={
+                 'text-xl flex flex-row text-center -translate-x-72 sm:-translate-x-60 z-30 absolute mt-5 px-4 top-0 right-0 overflow-hidden rounded-lg'}
+              >
+                <div className="flex transition-all flex-col items-center ">
+                  <div
+                    onClick={() => Onclick()}
+                    className="bg-white rounded-full w-fit px-2 pt-1"
+                    ref={headerRef}
+                  >
+                    <Image
+                      className={`rotate-${hidden.rotate.toString()} transition-all duration-300 cursor-pointer`}
+                      height={40}
+                      width={40}
+                      src={"/menuiconwhite.png"}
+                    />
+                  </div>
+                  <div
+                    className={`w-fit h-fit opacity-${hidden.hidden} transition-all duration-300`}
+                  >
+                    <ul
+                      style={{ fontFamily: "Mandalore" }}
+                      className="text-xl text-white dark:text-gray-200"
+                    >
+                      <li className="pt-1 hover:border-b-4 border-pink-500">
+                        <Link href={"/"}>Dashboard</Link>
+                      </li>
+                      <li className="pt-1 hover:border-b-4 border-pink-500">
+                        <Link href="/Dapp/NFTMintPage">Claims</Link>
+                      </li>
+                      <li className="pt-1 hover:border-b-4 border-pink-500">
+                        <Link href="/Token/TokenPage">Gambling</Link>
+                      </li>
+                      <li className="pt-1 hover:border-b-4 border-pink-500">
+                        <Link href="/Token/TokenPage">Gaming</Link>
+                      </li>
+                      <li>
+                        <a
+                          onClick={() =>
+                            window.open("")
+                          }
+                          className=" cursor-pointer block px-4 pt-2 hover:border-b-4 border-pink-500"
+                        >
+                          Website
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </ul>
             </ul>
           </div>
         </div>

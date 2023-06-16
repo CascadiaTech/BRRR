@@ -144,14 +144,9 @@ const NFTMint = () => {
       <HeaderComponent></HeaderComponent>
       <main className={styles.main}>
         <div className="justify-center">
-          <div className={'flex flex-col mx-auto px-12 mt-12 w-fit h-fit justify-center'}>
-          <Image
-            className="px-2 mt-32 justify-center"
-            src={goonsPic}
-          ></Image>
-          </div>
-          <div className="flex flex-col sm:content-start justify-self-end w-screen text-right">
-            <MintCardComponent></MintCardComponent>
+          <div className={'flex flex-col mx-auto px-12 mt-24 w-fit h-fit justify-center'}>
+        <ClaimComponent></ClaimComponent>
+
           </div>
         </div>
       </main>
