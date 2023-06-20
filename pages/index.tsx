@@ -89,7 +89,7 @@ const Home: NextPage = () => {
         const provider = new Web3Provider(
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
-        const contractaddress = "0x74686B863Efc70eFa059645B0cDB2F45b0B13B93"; // "clienttokenaddress"
+        const contractaddress = "0x552754cBd16264C5141cB5fdAF34246553a10C49"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
         const Reflections = await contract.getTotalDividendsDistributed();
         const formattedDistributed = formatEther(Reflections);
@@ -112,7 +112,7 @@ const Home: NextPage = () => {
         const provider = new Web3Provider(
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
-        const contractaddress = "0x74686B863Efc70eFa059645B0cDB2F45b0B13B93"; // "clienttokenaddress"
+        const contractaddress = "0x552754cBd16264C5141cB5fdAF34246553a10C49"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
         const burnAmount = await contract.TotalBurned();
         const finalNumber = formatEther(burnAmount);
@@ -152,7 +152,7 @@ const Home: NextPage = () => {
   const MY_TOKEN_LIST = [
     {
       name: "BRRR",
-      address: "0xb99405b00eF8D0Cf17aEf9D46a8d3cB9f3b72e57",
+      address: "0x552754cBd16264C5141cB5fdAF34246553a10C49",
       symbol: "BRRR",
       decimals: 18,
       chainId: 1,
@@ -167,7 +167,7 @@ const Home: NextPage = () => {
         params: {
           type: "ERC20",
           options: {
-            address: "0xb99405b00eF8D0Cf17aEf9D46a8d3cB9f3b72e57", // ERC20 token address
+            address: "0x552754cBd16264C5141cB5fdAF34246553a10C49", // ERC20 token address
             symbol: `BRRR`,
             decimals: 18,
           },

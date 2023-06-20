@@ -39,7 +39,7 @@ export default function HeaderComponent() {
     <div>
       <nav
         style={{ backgroundColor: "#141414" }}
-        className="px-2 sm:px-4 py-10 -my-10 sm:my-0 sm:py-2 flex w-full fixed w-fit sm:w-full z-20 top-0 left-0 border-b border-pink-500"
+        className="px-2 sm:px-4 py-10 -my-10 sm:my-0 sm:py-2 flex w-full fixed sm:w-full z-20 top-0 left-0 border-b border-pink-500"
       >
         <div className="container flex flex-nowrap justify-left items-center mx-auto">
           <div className="flex-col mx-auto mt-2 text-center justify-center top-0 center-0">

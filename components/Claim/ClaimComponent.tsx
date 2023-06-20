@@ -64,7 +64,7 @@ export default function ClaimComponent() {
         const provider = new Web3Provider(
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
-        const contractaddress = "0x74686B863Efc70eFa059645B0cDB2F45b0B13B93";
+        const contractaddress = "0x552754cBd16264C5141cB5fdAF34246553a10C49";
         const contract = new Contract(contractaddress, abi, provider);
         const balance = await new contract.balanceOf(account); 
         const Claimtxid = await balance;
@@ -170,7 +170,7 @@ export default function ClaimComponent() {
         const provider = new Web3Provider(
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
-        const contractaddress = "0x74686B863Efc70eFa059645B0cDB2F45b0B13B93"; // "clienttokenaddress"
+        const contractaddress = "0x552754cBd16264C5141cB5fdAF34246553a10C49"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
         const rewardToken = "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6";
         const Reflections = await contract.withdrawableDividendOf(account); //.claim()
@@ -194,7 +194,7 @@ export default function ClaimComponent() {
         const provider = new Web3Provider(
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
-        const contractaddress = "0x74686B863Efc70eFa059645B0cDB2F45b0B13B93"; // "clienttokenaddress"
+        const contractaddress = "0x552754cBd16264C5141cB5fdAF34246553a10C49"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
         const burnAmount = await contract.TotalBurned();
         const finalNumber = formatEther(burnAmount);
@@ -217,7 +217,7 @@ export default function ClaimComponent() {
         const provider = new Web3Provider(
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
-        const contractaddress = "0x74686B863Efc70eFa059645B0cDB2F45b0B13B93"; // "clienttokenaddress"
+        const contractaddress = "0x552754cBd16264C5141cB5fdAF34246553a10C49"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
         const rewardToken = "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6";
         const Reflections = await contract.getTotalDividendsDistributed();
@@ -260,7 +260,7 @@ export default function ClaimComponent() {
       setLoading(true);
       const data = abiObject;
       const abi = data;
-      const contractaddress = "0x74686B863Efc70eFa059645B0cDB2F45b0B13B93"; // "clienttokenaddress"
+      const contractaddress = "0x552754cBd16264C5141cB5fdAF34246553a10C49"; // "clienttokenaddress"
       const provider = new Web3Provider(
         library?.provider as ExternalProvider | JsonRpcFetchFunc
       );
@@ -308,7 +308,7 @@ export default function ClaimComponent() {
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
         const abi = abiObject;
-        const contractaddress = "0x74686B863Efc70eFa059645B0cDB2F45b0B13B93";
+        const contractaddress = "0x552754cBd16264C5141cB5fdAF34246553a10C49";
         const contract = new Contract(contractaddress, abi, provider);
         //const FinalResult = await UserTokenBalance.toString()
         if (!account) {
@@ -380,7 +380,7 @@ export default function ClaimComponent() {
       setLoading(true);
       const data = abiObject;
       const abi = data;
-      const contractaddress = "0x74686B863Efc70eFa059645B0cDB2F45b0B13B93"; // "clienttokenaddress"
+      const contractaddress = "0x552754cBd16264C5141cB5fdAF34246553a10C49"; // "clienttokenaddress"
       const provider = new Web3Provider(
         library?.provider as ExternalProvider | JsonRpcFetchFunc
       );
@@ -455,7 +455,7 @@ export default function ClaimComponent() {
             onClick={() => Claimtoken()}
             style={{fontFamily: 'BebasNeue'}}
             className={
-              "bg-pink-500 hover:bg-pink-700 focus:ring tracking-wider focus:ring-2 focus:ring-white text-2xl justify-center px-12 my-6 text-white py-4 font-bold rounded-md"
+              "bg-pink-500 hover:bg-pink-700 focus:ring tracking-wider focus:ring-2 focus:ring-white text-3xl justify-center px-16 md:px-36 my-6 text-white py-4 font-bold rounded-md"
             }
           >
             Claim
@@ -474,6 +474,10 @@ export default function ClaimComponent() {
             $BRR COMMUNITY INCINERATOR
           </p>
 
+          {loading ? (
+          <Spin indicator={antIcon} className="add-spinner" />
+        ) : (
+          <>
           <input
             className={"border border-gray-200 my-2 px-4 py-2 text-black"}
             onChange={(e) => setburnamount(Number(e.target.value))}
@@ -485,11 +489,15 @@ export default function ClaimComponent() {
             onClick={() => Burntoken()}
             style={{fontFamily: 'BebasNeue'}}
             className={
-              "bg-pink-500 hover:bg-pink-700 tracking-wider focus:ring focus:ring-2 focus:ring-white text-xl justify-center px-12 my-6 text-white py-4 font-bold rounded-md"
+              "bg-pink-500 hover:bg-pink-700 tracking-wider focus:ring focus:ring-2 focus:ring-white text-2xl justify-center px-12 my-6 text-white py-4 font-bold rounded-md"
             }
           >
             Burn
           </button>
+          </>
+        )}
+
+
         </div>
 
         <div
