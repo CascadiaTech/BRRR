@@ -10,6 +10,7 @@ import {
   Web3Provider,
 } from "@ethersproject/providers";
 import { formatEther, parseEther } from "@ethersproject/units";
+import { ethers } from 'ethers';
 import { Contract } from "@ethersproject/contracts";
 import { abiObject } from "../../contracts/abi/abi.mjs";
 import Image from "next/image.js";
@@ -33,7 +34,7 @@ export default function ClaimComponent() {
   const { library } = context;
   const [uniswaprovider, setuniswapprivder] = useState();
   const [tokenid, settokenid] = useState(Number);
-  const [pendingreflections, setpendingreflections] = useState(String);
+  const [pendingreflections, setpendingreflections] = useState(Number);
   const [totalburned, settotalburned] = useState(String);
   const [totaldistributed, settotaldistributed] = useState(String);
   const [balance, setbalance] = useState(Number);
@@ -63,7 +64,7 @@ export default function ClaimComponent() {
         const provider = new Web3Provider(
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
-        const contractaddress = "0x76352b61F118e3bB83327b73FFCeCEd769682E5e";
+        const contractaddress = "0x74686B863Efc70eFa059645B0cDB2F45b0B13B93";
         const contract = new Contract(contractaddress, abi, provider);
         const balance = await new contract.balanceOf(account); 
         const Claimtxid = await balance;
@@ -169,12 +170,12 @@ export default function ClaimComponent() {
         const provider = new Web3Provider(
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
-        const contractaddress = "0x76352b61F118e3bB83327b73FFCeCEd769682E5e"; // "clienttokenaddress"
+        const contractaddress = "0x74686B863Efc70eFa059645B0cDB2F45b0B13B93"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
         const rewardToken = "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6";
         const Reflections = await contract.withdrawableDividendOf(account); //.claim()
         const finalnumber = formatEther(Reflections.toString());
-        setpendingreflections(finalnumber);
+        setpendingreflections;
         console.log(Reflections);
         console.log(finalnumber);
         return finalnumber;
@@ -193,7 +194,7 @@ export default function ClaimComponent() {
         const provider = new Web3Provider(
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
-        const contractaddress = "0x76352b61F118e3bB83327b73FFCeCEd769682E5e"; // "clienttokenaddress"
+        const contractaddress = "0x74686B863Efc70eFa059645B0cDB2F45b0B13B93"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
         const burnAmount = await contract.TotalBurned();
         const finalNumber = formatEther(burnAmount);
@@ -216,7 +217,7 @@ export default function ClaimComponent() {
         const provider = new Web3Provider(
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
-        const contractaddress = "0x76352b61F118e3bB83327b73FFCeCEd769682E5e"; // "clienttokenaddress"
+        const contractaddress = "0x74686B863Efc70eFa059645B0cDB2F45b0B13B93"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
         const rewardToken = "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6";
         const Reflections = await contract.getTotalDividendsDistributed();
@@ -259,7 +260,7 @@ export default function ClaimComponent() {
       setLoading(true);
       const data = abiObject;
       const abi = data;
-      const contractaddress = "0x76352b61F118e3bB83327b73FFCeCEd769682E5e"; // "clienttokenaddress"
+      const contractaddress = "0x74686B863Efc70eFa059645B0cDB2F45b0B13B93"; // "clienttokenaddress"
       const provider = new Web3Provider(
         library?.provider as ExternalProvider | JsonRpcFetchFunc
       );
@@ -269,7 +270,7 @@ export default function ClaimComponent() {
       console.log(contract);
       const ClaimTokens = await contract.claim(); //.claim()
       const signtransaction = await signer.signTransaction(ClaimTokens);
-      const Claimtxid = await signtransaction;
+      const Claimtxid = signtransaction;
       Swal.fire({
         icon: "success",
         title: "Congratulations you have Claimed all of your rewards",
@@ -307,7 +308,7 @@ export default function ClaimComponent() {
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
         const abi = abiObject;
-        const contractaddress = "0x76352b61F118e3bB83327b73FFCeCEd769682E5e";
+        const contractaddress = "0x74686B863Efc70eFa059645B0cDB2F45b0B13B93";
         const contract = new Contract(contractaddress, abi, provider);
         //const FinalResult = await UserTokenBalance.toString()
         if (!account) {
@@ -349,18 +350,22 @@ export default function ClaimComponent() {
     return Number((num / 1000000).toFixed(3));
   }
   console.log(insertDecimal(pendingreflections));
-  const decimalpendingreflections = insertDecimal(pendingreflections);
-  const formattedRelfections = numberWithCommas(decimalpendingreflections);
+  
 
-  const Decimal_DistributedReflections = insertDecimal(totaldistributed);
-  const formatted_distribution = numberWithCommas(
-    Decimal_DistributedReflections
-  );
+
+// const Decimal_DistributedReflections = 's';
+// const formatted_distribution = numberWithCommas(
+//   Decimal_DistributedReflections
+// );
 
   const Decimal_balance = insertDecimal(balance / 1000000000000);
   const formatted_balance = numberWithCommas(Decimal_balance);
 
+  const decimalpendingreflections  = insertDecimal(pendingreflections / 1000000000000);
+  const formattedReflections = numberWithCommas(decimalpendingreflections);
   
+
+
 
   const Burntoken = useCallback(async () => {
     if (!account) {
@@ -375,7 +380,7 @@ export default function ClaimComponent() {
       setLoading(true);
       const data = abiObject;
       const abi = data;
-      const contractaddress = "0x76352b61F118e3bB83327b73FFCeCEd769682E5e"; // "clienttokenaddress"
+      const contractaddress = "0x74686B863Efc70eFa059645B0cDB2F45b0B13B93"; // "clienttokenaddress"
       const provider = new Web3Provider(
         library?.provider as ExternalProvider | JsonRpcFetchFunc
       );
@@ -383,9 +388,11 @@ export default function ClaimComponent() {
       const signer = provider.getSigner();
       const contract = new Contract(contractaddress, abi, signer);
       console.log(contract);
-      const BurnTokens = await contract.burn(); //.burn()
+      const finalburn = ethers.utils.parseUnits(burnamount.toString(), 18);
+      const BurnTokens = await contract.burn(finalburn); //.burn()
       const signtransaction = await signer.signTransaction(BurnTokens);
-      const FinalBurn = await signtransaction;
+      const FinalBurn = Number(signtransaction);
+      //const StringFinalBurn = FinalBurn
       Swal.fire({
         icon: "success",
         title: "Congratulations you have Burned all of your tokens",
@@ -401,11 +408,12 @@ export default function ClaimComponent() {
 
   return (
     <>
-      <div className={"flex flex-col mx-auto justify-center mt-16 w-fit"}>
-        <div className={"flex flex-row mx-auto"}>
+    <h1 className={'text-pink-500 text-4xl text-center sm:text-5xl'} style={{fontFamily: 'BebasNeue'}}>$BRRR Claim </h1>
+      <div className={"flex flex-col mx-auto justify-center mt-8 w-full"}>
+        <div className={"flex flex-col md:flex-row mx-auto"}>
           <div
             style={{ backgroundColor: "#212121" }}
-            className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-3 py-3 text-center mr-2 mb-2"
+            className="text-white w-52 h-40 font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-3 py-3 text-center mr-2 mb-2"
           >
             <div className={"flex flex-row"}>
               <p>Balance</p>
@@ -415,7 +423,7 @@ export default function ClaimComponent() {
           </div>
           <div
             style={{ backgroundColor: "#212121" }}
-            className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-3 py-3 text-center mr-2 mb-2"
+            className="text-white w-52 h-40 font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-3 py-3 text-center mr-2 mb-2"
           >
             <div className={"flex flex-row"}>
               <p>Claimed</p>
@@ -425,13 +433,13 @@ export default function ClaimComponent() {
           </div>
           <div
             style={{ backgroundColor: "#212121" }}
-            className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-3 py-3 text-center mr-2 mb-2"
+            className="text-white w-52 h-40 font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-3 py-3 text-center mr-2 mb-2"
           >
             <div className={"flex flex-row"}>
               <p>Unclaimed</p>
               <Image src={UnclaimedGraphic}></Image>
             </div>
-            <p className={"text-left"}>{pendingreflections}</p>
+            <p className={"text-left"}>{formattedReflections}</p>
           </div>
         </div>
       </div>
@@ -445,8 +453,9 @@ export default function ClaimComponent() {
             <div className="mx-auto ">
             <button
             onClick={() => Claimtoken()}
+            style={{fontFamily: 'BebasNeue'}}
             className={
-              "bg-pink-400 hover:bg-pink-600 focus:ring focus:ring-2 focus:ring-white text-xl justify-center px-12 my-6 text-white py-4 font-bold rounded-md"
+              "bg-pink-500 hover:bg-pink-700 focus:ring tracking-wider focus:ring-2 focus:ring-white text-2xl justify-center px-12 my-6 text-white py-4 font-bold rounded-md"
             }
           >
             Claim
@@ -474,8 +483,9 @@ export default function ClaimComponent() {
           ></input>
           <button
             onClick={() => Burntoken()}
+            style={{fontFamily: 'BebasNeue'}}
             className={
-              "bg-pink-400 hover:bg-pink-600 focus:ring focus:ring-2 focus:ring-white text-xl justify-center px-12 my-6 text-white py-4 font-bold rounded-md"
+              "bg-pink-500 hover:bg-pink-700 tracking-wider focus:ring focus:ring-2 focus:ring-white text-xl justify-center px-12 my-6 text-white py-4 font-bold rounded-md"
             }
           >
             Burn
@@ -493,7 +503,7 @@ export default function ClaimComponent() {
           }
         >
           <Image
-            className={"justify-center mx-auto translate-y-20"}
+            className={"justify-center mx-auto"}
             src={BRRHead}
           ></Image>
         </div>

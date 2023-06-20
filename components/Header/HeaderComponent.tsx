@@ -107,7 +107,7 @@ export default function HeaderComponent() {
                       <li>
                         <a
                           onClick={() =>
-                            window.open("")
+                            window.open("https://brrrr.tech/")
                           }
                           className=" cursor-pointer block px-4 pt-2 hover:border-b-4 border-pink-500"
                         >

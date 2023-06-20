@@ -74,8 +74,9 @@ export const ConnectWallet = () => {
       {active ? (
         <button
           type="button"
+          style={{fontFamily: 'BebasNeue'}}
           onClick={onActiveClick}
-          className="text-white font-bold text-xl bg-pink-400 hover:bg-pink-600 focus:ring-4 focus:ring-blue-300 mt-2 rounded-lg px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          className="text-white font-bold text-xl bg-pink-500 hover:bg-pink-700 tracking-wider focus:ring-4 focus:ring-blue-300 mt-2 rounded-lg px-3 py-2.5 mr-2 mb-2"
                 >
           Disconnect Wallet
         </button>
@@ -84,7 +85,8 @@ export const ConnectWallet = () => {
           <button
             type="button"
             onClick={OnClick}
-            className="text-white font-bold text-xl bg-pink-400 hover:bg-pink-600 focus:ring-4 focus:ring-blue-300 mt-2 rounded-lg px-5 py-2.5 mb-2 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+            style={{fontFamily: 'BebasNeue'}}
+            className="text-white font-bold text-xl bg-pink-500 hover:bg-pink-700 tracking-wider focus:ring-4 focus:ring-blue-300 mt-2 rounded-lg px-3 py-2.5 mb-2 mr-2"
           >
             Connect Wallet
           </button>
