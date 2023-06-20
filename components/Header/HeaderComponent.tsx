@@ -67,7 +67,7 @@ export default function HeaderComponent() {
               
               <ul
                 className={
-                 'text-xl flex flex-row text-center -translate-x-8 z-30 absolute mt-14 sm:mt-5 top-0 right-0 overflow-hidden rounded-lg'}
+                 'text-xl flex flex-row text-center -translate-x-6 z-30 absolute mt-14 sm:mt-5 top-0 right-0 overflow-hidden rounded-lg'}
               >
                 <div className="flex transition-all flex-col items-center ">
                   <div
@@ -93,13 +93,16 @@ export default function HeaderComponent() {
                         <Link href={"/"}>Dashboard</Link>
                       </li>
                       <li className="pt-1 hover:border-b-4 border-pink-500">
-                        <Link href="/Dapp/NFTMintPage">Claims</Link>
+                        <Link href="/Dapp/ClaimPage">Claims</Link>
                       </li>
                       <li className="pt-1 hover:border-b-4 border-pink-500">
-                        <Link href="/Token/TokenPage">Gambling</Link>
+                        <Link href="/Gambling/GamblingPage">Gambling</Link>
                       </li>
                       <li className="pt-1 hover:border-b-4 border-pink-500">
-                        <Link href="/Token/TokenPage">Gaming</Link>
+                        <Link href="/Gaming/GamingPage">Gaming</Link>
+                      </li>
+                      <li className="pt-1 hover:border-b-4 border-pink-500">
+                        <Link href="/Merch/MerchPage">Merch</Link>
                       </li>
                       <li>
                         <a

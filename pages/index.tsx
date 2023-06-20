@@ -101,9 +101,9 @@ const Home: NextPage = () => {
 
   const MY_TOKEN_LIST = [
     {
-      name: "Cosmic Odyssey",
+      name: "BRRR",
       address: "0xb99405b00eF8D0Cf17aEf9D46a8d3cB9f3b72e57",
-      symbol: "COSMIC",
+      symbol: "BRRR",
       decimals: 18,
       chainId: 1,
     },
@@ -140,15 +140,17 @@ const Home: NextPage = () => {
         </header>
         <div className="sm:w-fit self-center py-6 mx-auto justify-center flex flex-col lg:w-fit lg:flex-row mt-20 rounded-2xl">
           <div className={"flex flex-col mx-0 lg:mx-20"}>
+            
+          <h1 className={"text-2xl text-center text-pink-500 w-full"}>
+                Pillar functions
+              </h1>
             <div
               className={
-                "flex flex-col mx-auto self-center justify-center lg:flex-row px-20 lg:px-4 py-4 rounded-2xl h-fit w-fit"
+                "flex flex-col mx-auto self-center justify-center lg:flex-row px-20 lg:px-20 py-4 rounded-2xl h-fit w-fit"
               }
               style={{ backgroundColor: "#171717" }}
             >
-              <h1 className={"text-2xl text-left text-pink-500 w-fit"}>
-                Pillar functions
-              </h1>
+              
               <div className={"flex flex-col mx-5"}>
                 <Image width={100} height={150} src={Graphic}></Image>
                 <p className={"text-center"}>TBA</p>
@@ -181,30 +183,29 @@ const Home: NextPage = () => {
               </div>
             </div>
 
+
+            <h1 className={"text-2xl text-center mt-5 text-pink-500"}>
+                  $BRRR Tokenomics
+                </h1>
             <div
               className={
-                "flex flex-col mx-auto my-10 self-center justify-center lg:flex-row px-16 lg:px-5 py-4 rounded-2xl h-fit w-fit"
+                "flex flex-col mx-auto py-4 self-center justify-center lg:flex-row px-16 lg:px-24 py-4 rounded-2xl h-fit w-fit"
               }
               style={{ backgroundColor: "#171717" }}
             >
-              <div className={"flex flex-row"}>
-                <h1 className={"text-2xl text-left text-pink-500"}>
-                  $BRRR Tokenomics
-                </h1>
-              </div>
               <div
                 style={{ backgroundColor: "#212121" }}
-                className={"rounded-2xl my-2 mx-2 h-fit py-4 px-2"}
+                className={"rounded-2xl my-2 mx-4 h-fit py-4 px-2"}
               >
                 <div className={"flex flex-row"}>
                   <Image width={35} height={35} src={CalcGraphic}></Image>
                   <p className={"text-pink-500"}>Supply</p>
                 </div>
-                <p>32,000,000,000,000</p>
+                <p>32,000,000,000,000,000</p>
               </div>
               <div
                 style={{ backgroundColor: "#212121" }}
-                className={"rounded-2xl my-2 mx-2 h-fit py-4 px-2"}
+                className={"rounded-2xl my-2 mx-4 h-fit py-4 px-2"}
               >
                 <div className={"flex flex-row"}>
                   <Image width={35} height={35} src={MCapGraphic}></Image>
@@ -214,7 +215,7 @@ const Home: NextPage = () => {
               </div>
               <div
                 style={{ backgroundColor: "#212121" }}
-                className={"rounded-2xl my-2 mx-2 h-fit py-4 px-2"}
+                className={"rounded-2xl my-2 mx-4 h-fit py-4 px-2"}
               >
                 <div className={"flex flex-row"}>
                   <Image width={35} height={35} src={LiqGraphic}></Image>
@@ -237,7 +238,7 @@ const Home: NextPage = () => {
                   onClick={addTokenToMM}
                   className="bg-purple-600 my-1 rounded-xl h-fit hover:bg-purple-500 text-white font-bold py-2 px-4 border-b-4 border-purple-500 hover:border-purple-700"
                 >
-                  Add $BRRR to Metammask
+                  Add $BRRR to Metamask
                 </div>
               </>
             ) : (

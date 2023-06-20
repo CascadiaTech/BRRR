@@ -346,7 +346,7 @@ export default function ClaimComponent() {
   }
 
   function insertDecimal(num: any) {
-    return Number((num / 1000000000).toFixed(3));
+    return Number((num / 1000000).toFixed(3));
   }
   console.log(insertDecimal(pendingreflections));
   const decimalpendingreflections = insertDecimal(pendingreflections);
@@ -421,7 +421,7 @@ export default function ClaimComponent() {
               <p>Claimed</p>
               <Image src={ClaimedGraphic}></Image>
             </div>
-            <p className={"text-left"}>{pendingreflections}</p>
+            <p className={"text-left"}></p>
           </div>
           <div
             style={{ backgroundColor: "#212121" }}

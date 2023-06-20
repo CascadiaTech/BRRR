@@ -27,7 +27,7 @@ import ClaimComponent from "../../components/Claim/ClaimComponent";
 import { Contract } from "@ethersproject/contracts";
 //const mySafeHTML = DOMPurify.sanitize(myHTML)
 
-const NFTMint = () => {
+const Claim = () => {
   //const scrollY = useScrollPosition()
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const [loading, setLoading] = useState(false);
@@ -156,4 +156,4 @@ const NFTMint = () => {
   );
 };
 
-export default NFTMint;
+export default Claim;
