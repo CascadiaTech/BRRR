@@ -346,7 +346,7 @@ export default function ClaimComponent() {
   }
 
   function insertDecimal(num: any) {
-    return Number((num / 1000000).toFixed(3));
+    return Number((num / 1000000000).toFixed(3));
   }
   console.log(insertDecimal(pendingreflections));
   const decimalpendingreflections = insertDecimal(pendingreflections);
@@ -401,11 +401,11 @@ export default function ClaimComponent() {
 
   return (
     <>
-      <div className={"flex flex-col mx-auto justify-center mt-16 w-full"}>
+      <div className={"flex flex-col mx-auto justify-center mt-16 w-fit"}>
         <div className={"flex flex-row mx-auto"}>
           <div
             style={{ backgroundColor: "#212121" }}
-            className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-5 py-3 text-center mr-2 mb-2"
+            className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-3 py-3 text-center mr-2 mb-2"
           >
             <div className={"flex flex-row"}>
               <p>Balance</p>
@@ -415,7 +415,7 @@ export default function ClaimComponent() {
           </div>
           <div
             style={{ backgroundColor: "#212121" }}
-            className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-5 py-3 text-center mr-2 mb-2"
+            className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-3 py-3 text-center mr-2 mb-2"
           >
             <div className={"flex flex-row"}>
               <p>Claimed</p>
@@ -425,7 +425,7 @@ export default function ClaimComponent() {
           </div>
           <div
             style={{ backgroundColor: "#212121" }}
-            className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-5 py-3 text-center mr-2 mb-2"
+            className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-3 py-3 text-center mr-2 mb-2"
           >
             <div className={"flex flex-row"}>
               <p>Unclaimed</p>
@@ -436,21 +436,21 @@ export default function ClaimComponent() {
         </div>
       </div>
 
-      <div className="flex flex-col w-full justify-center px-6 sm:px-10 md:px-20 lg:px-48 xl:px-64">
+    
+      <div className="flex flex-col mx-auto w-full justify-center px-6 sm:px-10 md:px-20 lg:px-48 xl:px-64">
         {loading ? (
           <Spin indicator={antIcon} className="add-spinner" />
         ) : (
           <>
-            <div className="flex flex-row content-center items-center max-w-screen">
-              <button
-                type="button"
-                onClick={() => Claimtoken()}
-                className="w-fit mx-0 px-20 md:px-32 self-center content-center tn:mx-0 elevation-10 hover:elevation-50 md:mx-24 h-24
-                 clip-path-mycorners justify-self-center mt-10 text-gray-300 hover:text-gray-100 bg-pink-600 hover:bg-pink-800 transition ease-in-out duration-700
-                 text-3xl lg:text-4xl "
-              >
-                Claim
-              </button>
+            <div className="mx-auto ">
+            <button
+            onClick={() => Claimtoken()}
+            className={
+              "bg-pink-400 hover:bg-pink-600 focus:ring focus:ring-2 focus:ring-white text-xl justify-center px-12 my-6 text-white py-4 font-bold rounded-md"
+            }
+          >
+            Claim
+          </button>
             </div>
           </>
         )}

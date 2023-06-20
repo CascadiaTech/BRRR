@@ -44,6 +44,7 @@ export default function HeaderComponent() {
         <div className="container flex flex-nowrap justify-left items-center mx-auto">
           <div className="flex-col mx-auto mt-2 text-center justify-center top-0 center-0">
             <ConnectWallet></ConnectWallet>
+            <p className={'mx-5 sm:mx-0'}></p>
           </div>
           <div
             className="justify-left self-center items-left text-left w-full flex h-fit w-auto order-1 md:flex md:h-fit md:w-auto order-1"
@@ -66,7 +67,7 @@ export default function HeaderComponent() {
               
               <ul
                 className={
-                 'text-xl flex flex-row text-center -translate-x-10 z-30 absolute mt-14 sm:mt-5 px-0 top-0 right-0 overflow-hidden rounded-lg'}
+                 'text-xl flex flex-row text-center -translate-x-8 z-30 absolute mt-14 sm:mt-5 top-0 right-0 overflow-hidden rounded-lg'}
               >
                 <div className="flex transition-all flex-col items-center ">
                   <div
@@ -85,8 +86,8 @@ export default function HeaderComponent() {
                     className={`w-fit h-fit opacity-${hidden.hidden} transition-all duration-300`}
                   >
                     <ul
-                      style={{ fontFamily: "Mandalore" }}
-                      className="text-xl text-white dark:text-gray-200"
+                      style={{ fontFamily: "Mandalore", backgroundColor: "#171717" }}
+                      className="text-xl text-white rounded-xl px-2 py-2"
                     >
                       <li className="pt-1 hover:border-b-4 border-pink-500">
                         <Link href={"/"}>Dashboard</Link>
