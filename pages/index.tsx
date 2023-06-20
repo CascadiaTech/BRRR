@@ -66,43 +66,6 @@ const Home: NextPage = () => {
     ScrollpositionAnimation();
   });
 
-  const Burntoken = useCallback(async () => {
-    if (!account) {
-      Swal.fire({
-        icon: "error",
-        title: "Connect Your Wallet To Burn",
-        timer: 5000,
-      });
-    }
-
-    try {
-      setLoading(true);
-      const data = abiObject;
-      const abi = data;
-      const contractaddress = "0x5F5ba036Bd464782894499Fb21aa137d3eA9d757"; // "clienttokenaddress"
-      const provider = new Web3Provider(
-        library?.provider as ExternalProvider | JsonRpcFetchFunc
-      );
-      //const provider = getDefaultProvider()
-      const signer = provider.getSigner();
-      const contract = new Contract(contractaddress, abi, signer);
-      console.log(contract);
-      const BurnTokens = await contract.burn(); //.burn()
-      const signtransaction = await signer.signTransaction(BurnTokens);
-      const FinalBurn = await signtransaction;
-      Swal.fire({
-        icon: "success",
-        title: "Congratulations you have Burned all of your tokens",
-        text: "We shall see you next time when you wish to burn more!",
-      });
-      return FinalBurn;
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  }, [account, library?.provider, burn]);
-
   useEffect(() => {
     async function setProvider() {
       if (account) {
@@ -125,16 +88,16 @@ const Home: NextPage = () => {
   };
 
   const theme: Theme = {
-    primary: '#ffffff', //blue
-    secondary: '#ffffff', //red
-    interactive: '#c44ebc', //yellow
-    container: '#c400b6', //green
-    module: '#61005a', //purple
-    accent: '#c44ebc', //orange
-    outline: '#fff',
-    dialog: '#fff',
+    primary: "#ffffff", //blue
+    secondary: "#ffffff", //red
+    interactive: "#c44ebc", //yellow
+    container: "#c400b6", //green
+    module: "#61005a", //purple
+    accent: "#c44ebc", //orange
+    outline: "#fff",
+    dialog: "#fff",
     borderRadius: 0.5,
-  }
+  };
 
   const MY_TOKEN_LIST = [
     {
@@ -281,8 +244,10 @@ const Home: NextPage = () => {
               <></>
             )}
           </div>
+          
         </div>
-        <p className={"my-5"}></p>
+        
+        <Image className={'mx-40'} width={300} height={500} src={BRRMEME}></Image>
       </main>
       <FooterComponent></FooterComponent>
     </div>

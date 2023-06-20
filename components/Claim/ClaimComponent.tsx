@@ -13,6 +13,7 @@ import { formatEther, parseEther } from "@ethersproject/units";
 import { Contract } from "@ethersproject/contracts";
 import { abiObject } from "../../contracts/abi/abi.mjs";
 import Image from "next/image.js";
+import BigNumber from "bignumber.js";
 import ClaimedGraphic from "../../assets/images/ClaimedGraphic.png";
 import UnclaimedGraphic from "../../assets/images/UnclaimedGraphic.png";
 import BalanceGraphic from "../../assets/images/BalanceGraphic.png";
@@ -36,6 +37,7 @@ export default function ClaimComponent() {
   const [totalburned, settotalburned] = useState(String);
   const [totaldistributed, settotaldistributed] = useState(String);
   const [balance, setbalance] = useState(Number);
+  const [burnamount, setburnamount] = useState(Number);
   const [burn, setcanburn] = useState(Boolean);
   const [EthPrice, setEthPrice] = useState(Number);
   const [holdersCount, setholdersCount] = useState(Number);
@@ -61,10 +63,9 @@ export default function ClaimComponent() {
         const provider = new Web3Provider(
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
-        const contractaddress = "0x3aCb247406680c28Dd5816Ec36423bE53ce318D6"; // "clienttokenaddress"
+        const contractaddress = "0x76352b61F118e3bB83327b73FFCeCEd769682E5e";
         const contract = new Contract(contractaddress, abi, provider);
-        const balance = await new contract.balanceOf(account); //.claim(account,amount)
-        console.log(balance)
+        const balance = await new contract.balanceOf(account); 
         const Claimtxid = await balance;
         const finalbalance = Number(balance);
         const Fixeddecimals = finalbalance.toFixed(2);
@@ -81,6 +82,8 @@ export default function ClaimComponent() {
         setLoading(false);
       }
     }
+    
+    
     async function FetchMrTestyEthprice() {
       if (showConnectAWallet) {
         console.log({
@@ -166,7 +169,7 @@ export default function ClaimComponent() {
         const provider = new Web3Provider(
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
-        const contractaddress = "0x33F1ef9e8129F91C0763C35daF6De475057B2bC8"; // "clienttokenaddress"
+        const contractaddress = "0x76352b61F118e3bB83327b73FFCeCEd769682E5e"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
         const rewardToken = "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6";
         const Reflections = await contract.withdrawableDividendOf(account); //.claim()
@@ -190,7 +193,7 @@ export default function ClaimComponent() {
         const provider = new Web3Provider(
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
-        const contractaddress = "0x33F1ef9e8129F91C0763C35daF6De475057B2bC8"; // "clienttokenaddress"
+        const contractaddress = "0x76352b61F118e3bB83327b73FFCeCEd769682E5e"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
         const burnAmount = await contract.TotalBurned();
         const finalNumber = formatEther(burnAmount);
@@ -213,7 +216,7 @@ export default function ClaimComponent() {
         const provider = new Web3Provider(
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
-        const contractaddress = "0x5F5ba036Bd464782894499Fb21aa137d3eA9d757"; // "clienttokenaddress"
+        const contractaddress = "0x76352b61F118e3bB83327b73FFCeCEd769682E5e"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
         const rewardToken = "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6";
         const Reflections = await contract.getTotalDividendsDistributed();
@@ -237,83 +240,6 @@ export default function ClaimComponent() {
     // }
     // formattedDistributed()
 
-    async function scrollpositionAnimationleft() {
-      const targets = document.querySelectorAll(".js-show-on-scroll-left");
-      const observer = new IntersectionObserver(function (entries) {
-        entries.forEach((entry) => {
-          // Is the element in the viewport?
-          if (entry.isIntersecting) {
-            // Add the fadeIn class:
-            entry.target.classList.add("motion-safe:animate-fadeinleft");
-          } else {
-            // Otherwise remove the fadein class
-            entry.target.classList.remove("motion-safe:animate-fadeinleft");
-          }
-        });
-      });
-      // Loop through each of the target
-      targets.forEach(function (target) {
-        // Hide the element
-        target.classList.add("opacity-0");
-
-        // Add the element to the watcher
-        observer.observe(target);
-      });
-      //ScrollpositionAnimation();
-    }
-    async function scrollpositionAnimationright() {
-      const targets = document.querySelectorAll(".js-show-on-scroll-right");
-      const observer = new IntersectionObserver(function (entries) {
-        entries.forEach((entry) => {
-          // Is the element in the viewport?
-          if (entry.isIntersecting) {
-            // Add the fadeIn class:
-            entry.target.classList.add("motion-safe:animate-fadeinright");
-          } else {
-            // Otherwise remove the fadein class
-            entry.target.classList.remove("motion-safe:animate-fadeinright");
-          }
-        });
-      });
-      // Loop through each of the target
-      targets.forEach(function (target) {
-        // Hide the element
-        target.classList.add("opacity-0");
-
-        // Add the element to the watcher
-        observer.observe(target);
-      });
-      //ScrollpositionAnimation();
-    }
-    async function scrollpositionAnimationfadeOut() {
-      const targets = document.querySelectorAll(".js-show-on-scroll-fadeOut");
-      const observer = new IntersectionObserver(function (entries) {
-        entries.forEach((entry) => {
-          // Is the element in the viewport?
-          if (entry.isIntersecting) {
-            // Add the fadeIn class:
-            entry.target.classList.add("motion-safe:animate-fadeIn");
-          } else {
-            // Otherwise remove the fadein class
-            entry.target.classList.add("motion-safe:animate-fadeOut");
-          }
-        });
-      });
-      // Loop through each of the target
-      targets.forEach(function (target) {
-        // Hide the element
-        target.classList.add("opacity-0");
-
-        // Add the element to the watcher
-        observer.observe(target);
-      });
-      //ScrollpositionAnimation();
-    }
-
-    scrollpositionAnimationleft();
-    scrollpositionAnimationright();
-    scrollpositionAnimationfadeOut();
-
     totalBurned();
     PendingReflections();
     Fetchbalance();
@@ -333,7 +259,7 @@ export default function ClaimComponent() {
       setLoading(true);
       const data = abiObject;
       const abi = data;
-      const contractaddress = "0x5F5ba036Bd464782894499Fb21aa137d3eA9d757"; // "clienttokenaddress"
+      const contractaddress = "0x76352b61F118e3bB83327b73FFCeCEd769682E5e"; // "clienttokenaddress"
       const provider = new Web3Provider(
         library?.provider as ExternalProvider | JsonRpcFetchFunc
       );
@@ -368,8 +294,7 @@ export default function ClaimComponent() {
         return;
       }
     }
-
-    async function CanClaim() {
+/*    async function CanClaim() {
       if (!account) {
         console.log({
           message: "Hold On there Partner, there seems to be an Account err!",
@@ -382,7 +307,7 @@ export default function ClaimComponent() {
           library?.provider as ExternalProvider | JsonRpcFetchFunc
         );
         const abi = abiObject;
-        const contractaddress = "0xC1948D3FECaF1B33bB5b1bff22f944Cdc595C218";
+        const contractaddress = "0x76352b61F118e3bB83327b73FFCeCEd769682E5e";
         const contract = new Contract(contractaddress, abi, provider);
         //const FinalResult = await UserTokenBalance.toString()
         if (!account) {
@@ -411,10 +336,32 @@ export default function ClaimComponent() {
       }
     }
     CanClaim();
+    */
     setProvider().then((result) => setuniswapprivder(result as any));
   }, [account]);
 
   
+  function numberWithCommas(num: any) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  function insertDecimal(num: any) {
+    return Number((num / 1000000).toFixed(3));
+  }
+  console.log(insertDecimal(pendingreflections));
+  const decimalpendingreflections = insertDecimal(pendingreflections);
+  const formattedRelfections = numberWithCommas(decimalpendingreflections);
+
+  const Decimal_DistributedReflections = insertDecimal(totaldistributed);
+  const formatted_distribution = numberWithCommas(
+    Decimal_DistributedReflections
+  );
+
+  const Decimal_balance = insertDecimal(balance / 1000000000000);
+  const formatted_balance = numberWithCommas(Decimal_balance);
+
+  
+
   const Burntoken = useCallback(async () => {
     if (!account) {
       Swal.fire({
@@ -428,7 +375,7 @@ export default function ClaimComponent() {
       setLoading(true);
       const data = abiObject;
       const abi = data;
-      const contractaddress = "0x5F5ba036Bd464782894499Fb21aa137d3eA9d757"; // "clienttokenaddress"
+      const contractaddress = "0x76352b61F118e3bB83327b73FFCeCEd769682E5e"; // "clienttokenaddress"
       const provider = new Web3Provider(
         library?.provider as ExternalProvider | JsonRpcFetchFunc
       );
@@ -454,32 +401,32 @@ export default function ClaimComponent() {
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-        className={
-          "mx-auto justify-center mt-16 w-fit"
-        }
-      >
-        <div className={"flex flex-row w-fit mx-auto"}>
-          <div style={{ backgroundColor: "#212121"}} className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-5 py-3 text-center mr-2 mb-2">
+      <div className={"flex flex-col mx-auto justify-center mt-16 w-full"}>
+        <div className={"flex flex-row mx-auto"}>
+          <div
+            style={{ backgroundColor: "#212121" }}
+            className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-5 py-3 text-center mr-2 mb-2"
+          >
             <div className={"flex flex-row"}>
               <p>Balance</p>
               <Image src={BalanceGraphic}></Image>
             </div>
-            <p className={"text-left"}>{}</p>
+            <p className={"text-left"}>{formatted_balance}</p>
           </div>
-          <div style={{ backgroundColor: "#212121"}} className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-5 py-3 text-center mr-2 mb-2">
+          <div
+            style={{ backgroundColor: "#212121" }}
+            className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-5 py-3 text-center mr-2 mb-2"
+          >
             <div className={"flex flex-row"}>
               <p>Claimed</p>
               <Image src={ClaimedGraphic}></Image>
             </div>
             <p className={"text-left"}>{pendingreflections}</p>
           </div>
-          <div style={{ backgroundColor: "#212121"}} className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-5 py-3 text-center mr-2 mb-2">
+          <div
+            style={{ backgroundColor: "#212121" }}
+            className="text-white w-fit h-fit font-bold hover:text-white border transition-all duration-600 border-pink-600 rounded-lg px-5 py-3 text-center mr-2 mb-2"
+          >
             <div className={"flex flex-row"}>
               <p>Unclaimed</p>
               <Image src={UnclaimedGraphic}></Image>
@@ -489,13 +436,7 @@ export default function ClaimComponent() {
         </div>
       </div>
 
-      <div className="flex flex-col w-full content-center items-center px-6 sm:px-10 md:px-20 lg:px-48 xl:px-64 js-show-on-scroll-fadeOut">
-
-        <h5
-          className="text-center mb-2 text-4xl self-center text-gray-600"
-        >
-          Claim Airdrop Rewards
-        </h5>
+      <div className="flex flex-col w-full justify-center px-6 sm:px-10 md:px-20 lg:px-48 xl:px-64">
         {loading ? (
           <Spin indicator={antIcon} className="add-spinner" />
         ) : (
@@ -515,39 +456,46 @@ export default function ClaimComponent() {
         )}
         <hr className="my-4 mx-auto w-48 h-1 bg-pink-500 rounded border-0 md:my-10" />
         <div
-            style={{ backgroundColor: "#171717" }}
+          style={{ backgroundColor: "#171717" }}
+          className={
+            "w-fit self-center text-center flex flex-col justify-center my-10 text-center h-fit mx-auto px-10 rounded-xl py-4"
+          }
+        >
+          <p className={"text-center text-pink-500 text-xl font-bold my-10"}>
+            $BRR COMMUNITY INCINERATOR
+          </p>
+
+          <input
+            className={"border border-gray-200 my-2 px-4 py-2 text-black"}
+            onChange={(e) => setburnamount(Number(e.target.value))}
+            type="text"
+            name="Burn"
+            placeholder="Number of tokens to burn"
+          ></input>
+          <button
+            onClick={() => Burntoken()}
             className={
-              "w-fit self-center text-center flex flex-col justify-center my-10 text-center h-fit mx-auto px-10 rounded-xl py-4"
+              "bg-pink-400 hover:bg-pink-600 focus:ring focus:ring-2 focus:ring-white text-xl justify-center px-12 my-6 text-white py-4 font-bold rounded-md"
             }
           >
-            <p className={"text-center text-pink-500 text-xl font-bold my-10"}>
-              $BRR COMMUNITY INCINERATOR
-            </p>
-            <input
-              className={"border border-gray-200 my-2 px-4 py-2"}
-              placeholder="Amount to burn"
-            ></input>
-            <button
-              onClick={() => Burntoken()}
-              className={
-                "bg-pink-400 hover:bg-pink-600 focus:ring focus:ring-2 focus:ring-white text-xl justify-center px-12 my-6 text-white py-4 font-bold rounded-md"
-              }
-            >
-              Burn
-            </button>
-          </div>
+            Burn
+          </button>
+        </div>
 
         <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-        className={
-          "mx-auto self-center content-center items-center justify-center"
-        }
-      >
-        <Image className={'justify-center mx-auto'} src={BRRHead}></Image>
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+          className={
+            "mx-auto self-center content-center items-center justify-center"
+          }
+        >
+          <Image
+            className={"justify-center mx-auto translate-y-20"}
+            src={BRRHead}
+          ></Image>
         </div>
       </div>
     </>
@@ -578,7 +526,6 @@ export default function ClaimComponent() {
 //  <p className={"text-xl text-gray-300"}>{totalburned} $BRRR</p>
 //</div>
 //</div>
-
 
 //
 //<div className={"rounded-xl text-black text-xl px-4 py-2 m-3"}>

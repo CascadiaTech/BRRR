@@ -39,22 +39,22 @@ export default function HeaderComponent() {
     <div>
       <nav
         style={{ backgroundColor: "#141414" }}
-        className="px-2 sm:px-4 py-10 sm:py-2 flex fixed w-fit sm:w-full z-20 top-0 left-0 border-b border-pink-500"
+        className="px-2 sm:px-4 py-10 -my-10 sm:my-0 sm:py-2 flex w-full fixed w-fit sm:w-full z-20 top-0 left-0 border-b border-pink-500"
       >
         <div className="container flex flex-nowrap justify-left items-center mx-auto">
-          <div className="mt-4 mr-24 sm:mr-0 absolute top-0 right-0">
+          <div className="flex-col mx-auto mt-2 text-center justify-center top-0 center-0">
             <ConnectWallet></ConnectWallet>
           </div>
           <div
             className="justify-left self-center items-left text-left w-full flex h-fit w-auto order-1 md:flex md:h-fit md:w-auto order-1"
             id="navbar-sticky"
           >
-            <ul className="h-auto flex flex-row justify-left self-center -my-16 sm:my-0 text-left items-left p-4 mt-4 rounded-lg md:space-x-8 md:mt-0 md:text-md ">
-              <div className={'invisible sm:visible flex flex-row'}>
+            <ul className="h-auto flex flex-row justify-left self-center sm:my-0 text-left items-left p-4 mt-4 rounded-lg md:space-x-8 md:mt-0 md:text-md ">
+              <div className={'invisible sm:visible flex flex-row top-0 left-0 absolute mt-4 px-4'}>
               <li>
                 <Image width={50} height={50} src={BRRRLogo} alt="asa"></Image>
               </li>
-              <li className={"text-right justify-right px-3 content-right"}>
+              <li className={"invisible md:visible text-right justify-right px-3 content-right"}>
                 {" "}
                 <a onClick={() => window.open("")}>
                   <p className="text-xl font-bold cursor-pointer block self-center mt-2 pr-40 mr-40 pl-3 text-pink-400 md:bg-transparent md:p-0">
@@ -66,16 +66,16 @@ export default function HeaderComponent() {
               
               <ul
                 className={
-                 'text-xl flex flex-row text-center -translate-x-72 sm:-translate-x-60 z-30 absolute mt-5 px-4 top-0 right-0 overflow-hidden rounded-lg'}
+                 'text-xl flex flex-row text-center -translate-x-10 z-30 absolute mt-14 sm:mt-5 px-0 top-0 right-0 overflow-hidden rounded-lg'}
               >
                 <div className="flex transition-all flex-col items-center ">
                   <div
                     onClick={() => Onclick()}
-                    className="bg-white rounded-full w-fit px-2 pt-1"
+                    className="bg-purplegif rounded-full w-fit px-2 pt-1"
                     ref={headerRef}
                   >
                     <Image
-                      className={`rotate-${hidden.rotate.toString()} transition-all duration-300 cursor-pointer`}
+                      className={`rotate-${hidden.rotate.toString()} text-white transition-all duration-300 cursor-pointer`}
                       height={40}
                       width={40}
                       src={"/menuiconwhite.png"}

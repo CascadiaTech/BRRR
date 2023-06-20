@@ -38,6 +38,7 @@
     "@web3-react/core": "^6.0.9",
     "animate.css": "^4.1.1",
     "antd": "^4.23.5",
+    "big-number": "^2.0.0",
     "bignumber.js": "^9.0.2",
     "daisyui": "^2.31.0",
     "decimal.js": "^10.3.1",

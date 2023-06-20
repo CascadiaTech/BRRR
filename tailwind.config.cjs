@@ -37,6 +37,7 @@ module.exports = {
       backgroundImage: {
         runewaterfall: "url('../assets/images/Falls.jpg')",
         "footer-texture": "url('/img/footer-texture.png')",
+        purplegif: "url('/stars-glitters.gif')",
       },
       spacing: {
         100: "50vw",

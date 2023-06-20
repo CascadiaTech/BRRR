@@ -11,7 +11,7 @@
 }
 .mainpage {
   min-height: 100vh;
-  padding: 3rem 4px;
+  padding: 3rem;
   flex: 1;
   display: flex;
   flex-direction: column;
