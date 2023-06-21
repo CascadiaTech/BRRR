@@ -29,6 +29,7 @@ import { SwapWidget, Theme, darkTheme } from "@uniswap/widgets";
 import Swal from "sweetalert2";
 import { Contract } from "@ethersproject/contracts";
 import { abiObject } from "../contracts/abi/abi.mjs";
+import { pairabiObject } from "../contracts/abi/pairabi.mjs";
 import { formatEther } from "@ethersproject/units";
 import { ethers } from "ethers";
 const Home: NextPage = () => {
@@ -37,10 +38,11 @@ const Home: NextPage = () => {
   const context = useWeb3React();
   const [burn, setcanburn] = useState(Boolean);
   const [loading, setLoading] = useState(false);
-  const [totalburned, settotalburned] = useState(String);
+  const [totalburned, settotalburned] = useState(Number);
   const [totalbuybacks, settotalbuybacks] = useState(Number);
   const [totaldistributed, settotaldistributed] = useState(String);
   const [uniswaprovider, setuniswapprivder] = useState();
+  const [reserve, setreserve] = useState("")
   const { library } = context;
   const [isended, setisended] = useState(false);
 
@@ -118,13 +120,13 @@ const Home: NextPage = () => {
         const contractaddress = "0x552754cBd16264C5141cB5fdAF34246553a10C49"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
         const burnAmount = await contract.totalBurned();
-        const finalNumber = formatEther(burnAmount);
-        const numberFix = Number(finalNumber)
-        const fixedNumber = numberFix.toFixed(2)
-        settotalburned(fixedNumber);
-        console.log(burnAmount);
-        console.log(fixedNumber);
-        return fixedNumber;
+        const burnNumber = ethers.utils.formatEther(burnAmount);
+        const fixedburnnum = parseFloat(burnNumber).toFixed(2);
+        console.log(fixedburnnum);
+        const burnBigNumber = ethers.utils.parseUnits(fixedburnnum, 18);
+        settotalburned(Number(burnBigNumber));
+        console.log(burnBigNumber);
+        return burnBigNumber;
       } catch (error) {
         console.log(error);
         setLoading(false);
@@ -159,7 +161,41 @@ const Home: NextPage = () => {
         setLoading(false);
       }
     }
+    async function LiquidityPool() {
+      try {
+        setLoading(true);
+        const abi = pairabiObject;
+        const provider = new ethers.providers.Web3Provider(
+          library?.provider as ExternalProvider | JsonRpcFetchFunc
+        );
+        const pairaddress = "0x17558f1b70c99ae609f07d36668101664c7ad059"; // "clienttokenaddress"
+        const pairContract = new ethers.Contract(pairaddress, abi, provider);
+        const reserves = await pairContract.getReserves();
+        const reserve0 = ethers.BigNumber.from(reserves[0]); // Convert to BigNumber
+        const reserve1 = ethers.BigNumber.from(reserves[1]); // Convert to BigNumber
+        const token0Decimals = 18; // Set the number of decimals for the first token
+        const token1Decimals = 18; // Set the number of decimals for the second token
+        const formattedReserve0 = ethers.utils.formatUnits(reserve0, token0Decimals);
+        const formattedReserve1 = ethers.utils.formatUnits(reserve1, token1Decimals);
+
+        const liquidityPoolAmount = reserve0.add(reserve1);
+        console.log('Liquidity Pool Amount:', liquidityPoolAmount.toString());
+        const finalReserve1 = Number(formattedReserve1).toFixed(2)
+        setreserve(finalReserve1)
+        console.log('Reserve 0:', formattedReserve0);
+        console.log('Reserve 1:', formattedReserve1);
+        
+        return;
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      } finally {
+        setLoading(false);
+      }
+    }
     
+    console.log('hey there')
+    LiquidityPool();
     totalBuybacks();
     totalBurned();
     FetchDistributed();
@@ -177,6 +213,9 @@ const Home: NextPage = () => {
 
   const buybacksdecimals  = insertDecimal(totalbuybacks / 1000000000000);
   const formattedbuybacks = numberWithCommas(buybacksdecimals);
+
+  const burndecimals = insertDecimal(totalburned / 1000000000000);
+  const formattedburn = numberWithCommas(burndecimals);
   
 
   const jsonRpcUrlMap = {
@@ -258,7 +297,7 @@ const Home: NextPage = () => {
               </div>
               <div className={"flex flex-col mx-5"}>
                 <Image width={100} height={150} src={BurnedGraphic}></Image>
-                <p className={"text-center"}>{totalburned}</p>
+                <p className={"text-center"}>{formattedburn}</p>
                 <div
                   style={{ backgroundColor: "#040024" }}
                   className={"rounded-xl px-10 py-3"}
@@ -315,7 +354,7 @@ const Home: NextPage = () => {
                   <Image width={35} height={35} src={LiqGraphic}></Image>
                   <p className={"text-pink-500"}>Liquidity Pool</p>
                 </div>
-                <p>1.5 ETH</p>
+                <p>{reserve} WETH</p>
               </div>
             </div>
           </div>
