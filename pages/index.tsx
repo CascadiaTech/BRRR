@@ -41,6 +41,7 @@ const Home: NextPage = () => {
   const [totalburned, settotalburned] = useState(Number);
   const [totalbuybacks, settotalbuybacks] = useState(Number);
   const [totaldistributed, settotaldistributed] = useState(String);
+  const [totalsupply, settotalsupply] = useState(Number);
   const [uniswaprovider, setuniswapprivder] = useState();
   const [reserve, setreserve] = useState("")
   const { library } = context;
@@ -150,7 +151,6 @@ const Home: NextPage = () => {
         const fixedbuybacknum = parseFloat(finalNumber).toFixed(2);
         console.log(fixedbuybacknum);
         const buybackBigNumber = ethers.utils.parseUnits(fixedbuybacknum, 18);
-    
         settotalbuybacks(Number(buybackBigNumber));
         console.log(buybackBigNumber);
         return buybackBigNumber;
@@ -161,6 +161,32 @@ const Home: NextPage = () => {
         setLoading(false);
       }
     }
+    
+    async function totalSupply() {
+      try {
+        setLoading(true);
+        const abi = abiObject;
+        const provider = new Web3Provider(
+          library?.provider as ExternalProvider | JsonRpcFetchFunc
+        );
+        const contractaddress = "0x552754cBd16264C5141cB5fdAF34246553a10C49"; // "clienttokenaddress"
+        const contract = new Contract(contractaddress, abi, provider);
+        const supplyAmount = await contract.totalSupply();
+        const supplyNumber = ethers.utils.formatEther(supplyAmount);
+        const fixedsupplynum = parseFloat(supplyNumber).toFixed(1);
+        console.log(fixedsupplynum);
+        const supplyBigNumber = ethers.utils.parseUnits(fixedsupplynum, 18);
+        settotalsupply(Number(supplyBigNumber));
+        console.log(supplyBigNumber);
+        return supplyBigNumber;
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      } finally {
+        setLoading(false);
+      }
+    }
+
     async function LiquidityPool() {
       try {
         setLoading(true);
@@ -195,6 +221,7 @@ const Home: NextPage = () => {
     }
     
     console.log('hey there')
+    totalSupply();
     LiquidityPool();
     totalBuybacks();
     totalBurned();
@@ -217,6 +244,8 @@ const Home: NextPage = () => {
   const burndecimals = insertDecimal(totalburned / 1000000000000);
   const formattedburn = numberWithCommas(burndecimals);
   
+  const supplydecimals = insertDecimal(totalsupply / 1000000000000);
+  const formattedsuppply = numberWithCommas(supplydecimals);
 
   const jsonRpcUrlMap = {
     1: ["https://mainnet.infura.io/v3/fc5d70bd4f49467289b3babe3d8edd97"],
@@ -334,7 +363,7 @@ const Home: NextPage = () => {
                   <Image width={35} height={35} src={CalcGraphic}></Image>
                   <p className={"text-pink-500"}>Supply</p>
                 </div>
-                <p>32,000,000,000,000,000</p>
+                <p>{formattedsuppply}</p>
               </div>
               <div
                 style={{ backgroundColor: "#212121" }}
