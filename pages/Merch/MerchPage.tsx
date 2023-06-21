@@ -17,7 +17,9 @@ export default function MerchPage() {
            
             <p className={'mt-20'}></p>
           <h1 className={'text-2xl text-center'}>Coming Soon!</h1>
-          <Image src={Merch}></Image>
+          <div className={'w-full justify-center text-center'}>
+          <Image width={400} height={500} className={'mx-auto'} src={Merch}></Image>
+          </div>
     
           </main>
           <FooterComponent></FooterComponent>

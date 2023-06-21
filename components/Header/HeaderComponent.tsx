@@ -59,7 +59,7 @@ export default function HeaderComponent() {
                 {" "}
                 <a onClick={() => window.open("")}>
                   <p className="text-xl font-bold cursor-pointer block self-center mt-2 pr-40 mr-40 pl-3 text-pink-400 md:bg-transparent md:p-0">
-                    Printshop{" "}
+                    Valkyrie Dapp{" "}
                   </p>
                 </a>
               </li>

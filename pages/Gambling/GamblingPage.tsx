@@ -8,14 +8,16 @@ import HeaderComponent from "../../components/Header/HeaderComponent";
 export default function GamblingPage() {
     return (
         <>
-           <div className="scroll-smooth flex-col">
+           <div className="scroll-smooth">
           <main className={styles.main}>
             <header>
               {" "}
               <HeaderComponent></HeaderComponent>
             </header>
            <p className={'mt-20'}></p>
-          <Image src={Gambling}></Image>
+           <div className={'w-full justify-center text-center'}>
+          <Image width={500} height={500} className={'mx-auto'} src={Gambling}></Image>
+          </div>
           <h1 className={'text-2xl text-center'}>Coming Soon!</h1>
     
           </main>

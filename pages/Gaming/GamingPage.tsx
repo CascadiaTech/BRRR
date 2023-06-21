@@ -16,8 +16,9 @@ export default function GamingPage() {
         </header>
        
         <p className={'mt-20'}></p>
-      <Image src={GamingMario}></Image>
-
+           <div className={'w-full justify-center text-center'}>
+          <Image width={500} height={500} className={'mx-auto'} src={GamingMario}></Image>
+          </div>
       </main>
       <FooterComponent></FooterComponent>
     </div>
