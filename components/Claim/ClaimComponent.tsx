@@ -40,8 +40,7 @@ export default function ClaimComponent() {
   const [balance, setbalance] = useState(Number);
   const [burnamount, setburnamount] = useState(Number);
   const [burn, setcanburn] = useState(Boolean);
-  const [EthPrice, setEthPrice] = useState(Number);
-  const [holdersCount, setholdersCount] = useState(Number);
+  const [claimedbyuser, setclaimedbyuser] = useState(Number);
   const [marketCap, setmarketCap] = useState(Number);
   //const MarketCap = [(JpegPrice / EthPrice) * 10000000] // essentially jpegusd price divided by total supply
 
@@ -84,84 +83,6 @@ export default function ClaimComponent() {
       }
     }
     
-    
-    async function FetchMrTestyEthprice() {
-      if (showConnectAWallet) {
-        console.log({
-          message: "Hold On there Partner, there seems to be an Account err!",
-        });
-        return;
-      }
-
-      try {
-        setLoading(true);
-        const response = await fetch(
-          "https://api.ethplorer.io/getTokenInfo/0x9C3F96975324c51ecfE3722191655d1028575282?apiKey=EK-9PHXj-P2uJWQm-fmJ3A"
-        );
-
-        const data = await response.json();
-        const ethPrice = data.price.rate;
-        console.log(ethPrice);
-        setEthPrice(ethPrice);
-      } catch (error) {
-        console.log(error);
-      } finally {
-      }
-    }
-
-    FetchMrTestyEthprice();
-
-    async function FetchholdersCount() {
-      if (showConnectAWallet) {
-        console.log({
-          message: "Hold On there Partner, there seems to be an Account err!",
-        });
-        return;
-      }
-
-      try {
-        setLoading(true);
-        const response = await fetch(
-          "https://api.ethplorer.io/getTokenInfo/0x9C3F96975324c51ecfE3722191655d1028575282?apiKey=EK-9PHXj-P2uJWQm-fmJ3A"
-        );
-
-        const data = await response.json();
-        const holdersCount = data.holdersCount;
-        console.log(holdersCount);
-        setholdersCount(holdersCount);
-      } catch (error) {
-        console.log(error);
-      } finally {
-      }
-    }
-
-    FetchholdersCount();
-
-    async function FetchMarketCap() {
-      if (showConnectAWallet) {
-        console.log({
-          message: "Hold On there Partner, there seems to be an Account err!",
-        });
-        return;
-      }
-
-      try {
-        setLoading(true);
-        const response = await fetch(
-          "https://api.ethplorer.io/getTokenInfo/0x9C3F96975324c51ecfE3722191655d1028575282?apiKey=EK-9PHXj-P2uJWQm-fmJ3A"
-        );
-
-        const data = await response.json();
-        const marketCap = data.price.marketCapUsd;
-        console.log(marketCap);
-        setmarketCap(marketCap);
-      } catch (error) {
-        console.log(error);
-      } finally {
-      }
-    }
-
-    FetchMarketCap();
 
     async function PendingReflections() {
       try {
@@ -172,13 +93,40 @@ export default function ClaimComponent() {
         );
         const contractaddress = "0x552754cBd16264C5141cB5fdAF34246553a10C49"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
-        const rewardToken = "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6";
         const Reflections = await contract.withdrawableDividendOf(account); //.claim()
         const finalnumber = formatEther(Reflections.toString());
         setpendingreflections;
         console.log(Reflections);
         console.log(finalnumber);
         return finalnumber;
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    
+    async function TotalClaimedByUser() {
+      if (!account) {
+        return;
+      }
+      try {
+        setLoading(true);
+        const abi = abiObject;
+        const provider = new Web3Provider(
+          library?.provider as ExternalProvider | JsonRpcFetchFunc
+        );
+        const contractaddress = "0x552754cBd16264C5141cB5fdAF34246553a10C49"; // "clienttokenaddress"
+        const contract = new Contract(contractaddress, abi, provider);
+        const Reflections = await contract.ClaimedByUser(account); 
+        const finalnumber = formatEther(Reflections.toString());
+        const fixnum = Number(finalnumber)
+        setclaimedbyuser(fixnum)
+        console.log(fixnum);
+        console.log(finalnumber);
+        return fixnum;
       } catch (error) {
         console.log(error);
         setLoading(false);
@@ -196,7 +144,7 @@ export default function ClaimComponent() {
         );
         const contractaddress = "0x552754cBd16264C5141cB5fdAF34246553a10C49"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
-        const burnAmount = await contract.TotalBurned();
+        const burnAmount = await contract.totalBurned();
         const finalNumber = formatEther(burnAmount);
         settotalburned(finalNumber);
         console.log(burnAmount);
@@ -241,6 +189,7 @@ export default function ClaimComponent() {
     // }
     // formattedDistributed()
 
+    TotalClaimedByUser;
     totalBurned();
     PendingReflections();
     Fetchbalance();
@@ -350,13 +299,7 @@ export default function ClaimComponent() {
     return Number((num / 1000000).toFixed(3));
   }
   console.log(insertDecimal(pendingreflections));
-  
 
-
-// const Decimal_DistributedReflections = 's';
-// const formatted_distribution = numberWithCommas(
-//   Decimal_DistributedReflections
-// );
 
   const Decimal_balance = insertDecimal(balance / 1000000000000);
   const formatted_balance = numberWithCommas(Decimal_balance);
@@ -364,6 +307,8 @@ export default function ClaimComponent() {
   const decimalpendingreflections  = insertDecimal(pendingreflections / 1000000000000);
   const formattedReflections = numberWithCommas(decimalpendingreflections);
   
+  const claimedbyuserBalance = insertDecimal(claimedbyuser / 1000000000000);
+  const formatted_claim = numberWithCommas(claimedbyuserBalance);
 
 
 
@@ -429,7 +374,7 @@ export default function ClaimComponent() {
               <p>Claimed</p>
               <Image src={ClaimedGraphic}></Image>
             </div>
-            <p className={"text-left"}></p>
+            <p className={"text-left"}>{claimedbyuser}</p>
           </div>
           <div
             style={{ backgroundColor: "#212121" }}

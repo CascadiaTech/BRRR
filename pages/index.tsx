@@ -12,6 +12,7 @@ import {
   JsonRpcFetchFunc,
   Web3Provider,
 } from "@ethersproject/providers";
+import BigNumber from "bignumber.js";
 import Graphic from "../assets/images/Graphic.png";
 import BurnedGraphic from "../assets/images/BurnedGraphic.png";
 import CalcGraphic from "../assets/images/CalcGraphic.png";
@@ -29,6 +30,7 @@ import Swal from "sweetalert2";
 import { Contract } from "@ethersproject/contracts";
 import { abiObject } from "../contracts/abi/abi.mjs";
 import { formatEther } from "@ethersproject/units";
+import { ethers } from "ethers";
 const Home: NextPage = () => {
   const { account, chainId, active } = useWeb3React();
   const showConnectAWallet = Boolean(!account);
@@ -36,6 +38,7 @@ const Home: NextPage = () => {
   const [burn, setcanburn] = useState(Boolean);
   const [loading, setLoading] = useState(false);
   const [totalburned, settotalburned] = useState(String);
+  const [totalbuybacks, settotalbuybacks] = useState(Number);
   const [totaldistributed, settotaldistributed] = useState(String);
   const [uniswaprovider, setuniswapprivder] = useState();
   const { library } = context;
@@ -114,12 +117,14 @@ const Home: NextPage = () => {
         );
         const contractaddress = "0x552754cBd16264C5141cB5fdAF34246553a10C49"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
-        const burnAmount = await contract.TotalBurned();
+        const burnAmount = await contract.totalBurned();
         const finalNumber = formatEther(burnAmount);
-        settotalburned(finalNumber);
+        const numberFix = Number(finalNumber)
+        const fixedNumber = numberFix.toFixed(2)
+        settotalburned(fixedNumber);
         console.log(burnAmount);
-        console.log(finalNumber);
-        return finalNumber;
+        console.log(fixedNumber);
+        return fixedNumber;
       } catch (error) {
         console.log(error);
         setLoading(false);
@@ -127,10 +132,52 @@ const Home: NextPage = () => {
         setLoading(false);
       }
     }
+
+    async function totalBuybacks() {
+      try {
+        setLoading(true);
+        const abi = abiObject;
+        const provider = new Web3Provider(
+          library?.provider as ExternalProvider | JsonRpcFetchFunc
+        );
+        const contractaddress = "0x552754cBd16264C5141cB5fdAF34246553a10C49"; // "clienttokenaddress"
+        const contract = new Contract(contractaddress, abi, provider);
+        const buybackAmount = await contract.TotalBuyBacks();
+        const finalNumber = ethers.utils.formatEther(buybackAmount);
+        console.log(finalNumber);
+        const fixedbuybacknum = parseFloat(finalNumber).toFixed(2);
+        console.log(fixedbuybacknum);
+        const buybackBigNumber = ethers.utils.parseUnits(fixedbuybacknum, 18);
+    
+        settotalbuybacks(Number(buybackBigNumber));
+        console.log(buybackBigNumber);
+        return buybackBigNumber;
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    totalBuybacks();
     totalBurned();
     FetchDistributed();
     setProvider().then((result) => setuniswapprivder(result as any));
   }, [account]);
+
+  function numberWithCommas(num: any) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  function insertDecimal(num: any) {
+    return Number((num / 1000000).toFixed(3));
+  }
+
+
+  const buybacksdecimals  = insertDecimal(totalbuybacks / 1000000000000);
+  const formattedbuybacks = numberWithCommas(buybacksdecimals);
+  
 
   const jsonRpcUrlMap = {
     1: ["https://mainnet.infura.io/v3/fc5d70bd4f49467289b3babe3d8edd97"],
@@ -201,7 +248,7 @@ const Home: NextPage = () => {
             >
               <div className={"flex flex-col mx-5"}>
                 <Image width={100} height={150} src={Graphic}></Image>
-                <p className={"text-center"}></p>
+                <p className={"text-center"}>{formattedbuybacks}</p>
                 <div
                   style={{ backgroundColor: "#040024" }}
                   className={"rounded-xl px-10 py-3"}
