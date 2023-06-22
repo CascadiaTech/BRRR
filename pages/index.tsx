@@ -98,11 +98,10 @@ const Home: NextPage = () => {
         const contractaddress = "0x552754cBd16264C5141cB5fdAF34246553a10C49"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
         const Reflections = await contract.getTotalDividendsDistributed();
-        const formattedDistributed = formatEther(Reflections);
-        settotaldistributed(Number(formattedDistributed));
-        console.log(formattedDistributed);
+        const refinedDistributed = (Reflections);
+        settotaldistributed(Number(refinedDistributed));
 
-        return formattedDistributed;
+        return refinedDistributed;
       } catch (error) {
         console.log(error);
         setLoading(false);
