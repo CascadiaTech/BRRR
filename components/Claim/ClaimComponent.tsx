@@ -94,8 +94,9 @@ export default function ClaimComponent() {
         const contractaddress = "0x552754cBd16264C5141cB5fdAF34246553a10C49"; // "clienttokenaddress"
         const contract = new Contract(contractaddress, abi, provider);
         const Reflections = await contract.withdrawableDividendOf(account); //.claim()
-        const finalnumber = formatEther(Reflections.toString());
-        setpendingreflections;
+        console.log(Reflections)
+        const finalnumber = Reflections.toString()
+        setpendingreflections(Number(finalnumber));
         console.log(Reflections);
         console.log(finalnumber);
         return finalnumber;

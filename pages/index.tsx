@@ -40,7 +40,7 @@ const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [totalburned, settotalburned] = useState(Number);
   const [totalbuybacks, settotalbuybacks] = useState(Number);
-  const [totaldistributed, settotaldistributed] = useState(String);
+  const [totaldistributed, settotaldistributed] = useState(Number);
   const [totalsupply, settotalsupply] = useState(Number);
   const [uniswaprovider, setuniswapprivder] = useState();
   const [reserve, setreserve] = useState("")
@@ -99,7 +99,7 @@ const Home: NextPage = () => {
         const contract = new Contract(contractaddress, abi, provider);
         const Reflections = await contract.getTotalDividendsDistributed();
         const formattedDistributed = formatEther(Reflections);
-        settotaldistributed(formattedDistributed);
+        settotaldistributed(Number(formattedDistributed));
         console.log(formattedDistributed);
 
         return formattedDistributed;
@@ -247,6 +247,9 @@ const Home: NextPage = () => {
   const supplydecimals = insertDecimal(totalsupply / 1000000000000);
   const formattedsuppply = numberWithCommas(supplydecimals);
 
+  const airdropdecimals = insertDecimal(totaldistributed / 1000000000000);
+  const formatteddistributed = numberWithCommas(airdropdecimals);
+
   const jsonRpcUrlMap = {
     1: ["https://mainnet.infura.io/v3/fc5d70bd4f49467289b3babe3d8edd97"],
     3: ["https://ropsten.infura.io/v3/<YOUR_INFURA_PROJECT_ID>"],
@@ -336,7 +339,7 @@ const Home: NextPage = () => {
               </div>
               <div className={"flex flex-col mx-5"}>
                 <Image width={100} height={150} src={DropGraphic}></Image>
-                <p className={"text-center"}>{totaldistributed}</p>
+                <p className={"text-center"}>{formatteddistributed}</p>
                 <div
                   style={{ backgroundColor: "#040024" }}
                   className={" rounded-xl px-10 py-3"}
